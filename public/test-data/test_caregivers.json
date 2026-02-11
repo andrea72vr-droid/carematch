@@ -1,0 +1,1332 @@
+[
+    {
+        "id": "cg_001",
+        "user_id": "user_cg_001",
+        "raw_competenze_esperienze": {
+            "nome_completo": "Elena Rossi",
+            "lingue": [
+                "Italiano",
+                "Rumeno"
+            ],
+            "regione": "Veneto",
+            "provincia": "Verona",
+            "disponibilita": [
+                "full-time",
+                "convivenza"
+            ]
+        },
+        "raw_approccio_cura": {
+            "anni_esperienza": "10+",
+            "tipologie_assistenza": [
+                "anziani",
+                "disabilità motoria",
+                "Alzheimer"
+            ],
+            "competenze_specifiche": [
+                "mobilizzazione",
+                "igiene",
+                "gestione farmaci",
+                "cucina",
+                "insulinoterapia"
+            ],
+            "certificazioni": [
+                "OSS",
+                "Primo Soccorso"
+            ]
+        },
+        "raw_stile_relazionale": {
+            "preferenze_relazionali": "Preferisco un rapporto basato sulla fiducia e sul rispetto reciproco.",
+            "modalita_comunicativa": "Empatica",
+            "attivita_preferite": [
+                "lettura",
+                "passeggiate",
+                "ascolto musica"
+            ]
+        },
+        "psychological_profile": {
+            "stile_comunicativo": "motivante",
+            "livello_iniziativa": "collaborativo",
+            "approccio_emotivo": "empatico",
+            "energia_personale": "calma",
+            "routine_flessibilita": 7,
+            "scenario_rifiuto": "Cerco di capire il motivo del rifiuto e aspetto un momento più propizio, senza forzare.",
+            "contesto_lavorativo": "vivace",
+            "presenza_famiglia": "collaborativa",
+            "motivazione": [
+                "Aiutare gli altri",
+                "Stabilità economica"
+            ]
+        },
+        "raw_disponibilita": {
+            "orari_preferiti": [
+                "diurno",
+                "notturno"
+            ],
+            "spostamenti": true,
+            "patente": true,
+            "automunito": false,
+            "disponibilita_immediata": "si"
+        },
+        "raw_valori_personali": {
+            "descrizione": "Esperta e affidabile. Punti di forza: Grande pazienza e capacità di gestione di casi complessi. Limite: Tende a prendersi troppo a cuore i problemi degli assistiti. Scenario rifiuto: Se l'assistito rifiuta la terapia, provo a distrarlo o a spiegare l'importance in modo dolce."
+        }
+    },
+    {
+        "id": "cg_002",
+        "user_id": "user_cg_002",
+        "raw_competenze_esperienze": {
+            "nome_completo": "Marco Bianchi",
+            "lingue": [
+                "Italiano",
+                "Inglese"
+            ],
+            "regione": "Veneto",
+            "provincia": "Verona",
+            "disponibilita": [
+                "full-time"
+            ]
+        },
+        "raw_approccio_cura": {
+            "anni_esperienza": "10+",
+            "tipologie_assistenza": [
+                "disabilità motoria",
+                "SLA",
+                "riabilitazione"
+            ],
+            "competenze_specifiche": [
+                "mobilizzazione pesante",
+                "utilizzo sollevatore",
+                "gestione catetere",
+                "medicazioni"
+            ],
+            "certificazioni": [
+                "Laurea Infermieristica (non attiva)",
+                "BLSD"
+            ]
+        },
+        "raw_stile_relazionale": {
+            "preferenze_relazionali": "Approccio professionale e strutturato. Rispetto della privacy.",
+            "modalita_comunicativa": "Direttiva",
+            "attivita_preferite": [
+                "esercizi fisioterapici",
+                "scacchi",
+                "notizie"
+            ]
+        },
+        "psychological_profile": {
+            "stile_comunicativo": "diretto",
+            "livello_iniziativa": "autonomo",
+            "approccio_emotivo": "professionale",
+            "energia_personale": "molto attiva",
+            "routine_flessibilita": 3,
+            "scenario_rifiuto": "Spiego chiaramente le conseguenze mediche e insisto con fermezza professionale.",
+            "contesto_lavorativo": "tranquillo",
+            "presenza_famiglia": "distante",
+            "motivazione": [
+                "Professionalità",
+                "Vocazione tecnica"
+            ]
+        },
+        "raw_disponibilita": {
+            "orari_preferiti": [
+                "mattina",
+                "pomeriggio"
+            ],
+            "spostamenti": true,
+            "patente": true,
+            "automunito": true,
+            "disponibilita_immediata": "tra 15 giorni"
+        },
+        "raw_valori_personali": {
+            "descrizione": "Profilo tecnico eccellente. Punti di forza: Precisione chirurgica e forza fisica per mobilitazioni difficili. Limite: Può risultare poco espansivo o troppo rigido sugli orari. Scenario famiglia molto presente: Preferisco stabilire confini chiari per poter lavorare al meglio."
+        }
+    },
+    {
+        "id": "cg_003",
+        "user_id": "user_cg_003",
+        "raw_competenze_esperienze": {
+            "nome_completo": "Giulia Salvi",
+            "lingue": [
+                "Italiano"
+            ],
+            "regione": "Veneto",
+            "provincia": "Verona",
+            "disponibilita": [
+                "part-time"
+            ]
+        },
+        "raw_approccio_cura": {
+            "anni_esperienza": "0-2",
+            "tipologie_assistenza": [
+                "compagnia",
+                "disabilità cognitiva lieve",
+                "supporto scolastico"
+            ],
+            "competenze_specifiche": [
+                "animazione",
+                "preparazione pasti semplici",
+                "accompagnamento"
+            ],
+            "certificazioni": []
+        },
+        "raw_stile_relazionale": {
+            "preferenze_relazionali": "Voglio creare un legame di amicizia e supporto emotivo.",
+            "modalita_comunicativa": "Empatica",
+            "attivita_preferite": [
+                "arte",
+                "musica",
+                "giochi da tavolo"
+            ]
+        },
+        "psychological_profile": {
+            "stile_comunicativo": "motivante",
+            "livello_iniziativa": "ricettivo",
+            "approccio_emotivo": "empatico",
+            "energia_personale": "solare",
+            "routine_flessibilita": 9,
+            "scenario_rifiuto": "Cerco di trasformare l'attività in un gioco o in un momento di condivisione.",
+            "contesto_lavorativo": "vivace",
+            "presenza_famiglia": "collaborativa",
+            "motivazione": [
+                "Passione",
+                "Crescita personale"
+            ]
+        },
+        "raw_disponibilita": {
+            "orari_preferiti": [
+                "pomeriggio",
+                "weekend"
+            ],
+            "spostamenti": false,
+            "patente": true,
+            "automunito": true,
+            "disponibilita_immediata": "si"
+        },
+        "raw_valori_personali": {
+            "descrizione": "Junior molto motivata. Punti di forza: Energia inesauribile e capacità di stimolare l'assistito socialmente. Limite: Scarsa esperienza tecnica con patologie complesse. Scenario cambio routine: Mi adatto facilmente, sono molto flessibile."
+        }
+    },
+    {
+        "id": "cg_004",
+        "user_id": "user_cg_004",
+        "raw_competenze_esperienze": {
+            "nome_completo": "Viktor Petrov",
+            "lingue": [
+                "Italiano (base)",
+                "Russo",
+                "Bulgaro"
+            ],
+            "regione": "Veneto",
+            "provincia": "Verona",
+            "disponibilita": [
+                "convivenza"
+            ]
+        },
+        "raw_approccio_cura": {
+            "anni_esperienza": "10+",
+            "tipologie_assistenza": [
+                "disabilità motoria totale",
+                "anziani allettati",
+                "gestione macchinari"
+            ],
+            "competenze_specifiche": [
+                "ventilazione assistita",
+                "PEG",
+                "medicazioni piaghe da decubito",
+                "forza fisica"
+            ],
+            "certificazioni": [
+                "Attestato soccorritore estero"
+            ]
+        },
+        "raw_stile_relazionale": {
+            "preferenze_relazionali": "Eseguo i compiti assegnati con precisione. Poco dialogo.",
+            "modalita_comunicativa": "Discreta",
+            "attivita_preferite": [
+                "TV",
+                "riposo"
+            ]
+        },
+        "psychological_profile": {
+            "stile_comunicativo": "pragmatico",
+            "livello_iniziativa": "esecutivo",
+            "approccio_emotivo": "professionale",
+            "energia_personale": "calma",
+            "routine_flessibilita": 4,
+            "scenario_rifiuto": "Se il compito è necessario, lo porto a termine con decisione.",
+            "contesto_lavorativo": "indifferente",
+            "presenza_famiglia": "qualsiasi",
+            "motivazione": [
+                "Lavoro",
+                "Sostegno famiglia"
+            ]
+        },
+        "raw_disponibilita": {
+            "orari_preferiti": [
+                "H24"
+            ],
+            "spostamenti": true,
+            "patente": false,
+            "automunito": false,
+            "disponibilita_immediata": "si"
+        },
+        "raw_valori_personali": {
+            "descrizione": "Profilo 'Borderline': Alta competenza tecnica ma bassa empatia e barriera linguistica. Punti di forza: Gestione perfetta di allettati complessi. Limite: Pochissima interazione sociale, italiano limitato. Ottimo per chi cerca un tecnico puro senza bisogno di compagnia."
+        }
+    },
+    {
+        "id": "cg_005",
+        "user_id": "user_cg_005",
+        "raw_competenze_esperienze": {
+            "nome_completo": "Sofia Esposito",
+            "lingue": [
+                "Italiano"
+            ],
+            "regione": "Veneto",
+            "provincia": "Verona",
+            "disponibilita": [
+                "full-time"
+            ]
+        },
+        "raw_approccio_cura": {
+            "anni_esperienza": "5-10",
+            "tipologie_assistenza": [
+                "autismo",
+                "disabilità cognitiva",
+                "ADHD"
+            ],
+            "competenze_specifiche": [
+                "comunicazione aumentativa",
+                "metodo ABA (base)",
+                "gestione crisi"
+            ],
+            "certificazioni": [
+                "Educatrice Professionale"
+            ]
+        },
+        "raw_stile_relazionale": {
+            "preferenze_relazionali": "Lavoro sulla routine e sulla prevedibilità per dare sicurezza.",
+            "modalita_comunicativa": "Calma",
+            "attivita_preferite": [
+                "attività sensoriali",
+                "disegno",
+                "cucina terapeutica"
+            ]
+        },
+        "psychological_profile": {
+            "stile_comunicativo": "osservatore",
+            "livello_iniziativa": "collaborativo",
+            "approccio_emotivo": "equilibrato",
+            "energia_personale": "molto calma",
+            "routine_flessibilita": 2,
+            "scenario_rifiuto": "Utilizzo tecniche di rinforzo positivo o scambi simbolici per ridurre l'ansia dell'assistito.",
+            "contesto_lavorativo": "tranquillo",
+            "presenza_famiglia": "attiva",
+            "motivazione": [
+                "Passione per l'educazione",
+                "Impatto sociale"
+            ]
+        },
+        "raw_disponibilita": {
+            "orari_preferiti": [
+                "diurno"
+            ],
+            "spostamenti": true,
+            "patente": true,
+            "automunito": true,
+            "disponibilita_immediata": "si"
+        },
+        "raw_valori_personali": {
+            "descrizione": "Esperta in disturbi del comportamento. Punti di forza: Straordinaria calma nelle crisi e precisione nella routine. Limite: Non adatta a contesti caotici o cambi continui di programma. Scenario famiglia presente: Amo lavorare in team con i genitori."
+        }
+    },
+    {
+        "id": "cg_006",
+        "user_id": "user_cg_006",
+        "raw_competenze_esperienze": {
+            "nome_completo": "Federico Russo",
+            "lingue": [
+                "Italiano",
+                "Spagnolo"
+            ],
+            "regione": "Veneto",
+            "provincia": "Verona",
+            "disponibilita": [
+                "full-time",
+                "notti"
+            ]
+        },
+        "raw_approccio_cura": {
+            "anni_esperienza": "3-5",
+            "tipologie_assistenza": [
+                "disabilità motoria",
+                "post-operatorio"
+            ],
+            "competenze_specifiche": [
+                "igiene",
+                "preparazione pasti",
+                "supporto morale",
+                "sport adattato"
+            ],
+            "certificazioni": [
+                "Diploma ISEE"
+            ]
+        },
+        "raw_stile_relazionale": {
+            "preferenze_relazionali": "Compagno di attività e supporto concreto.",
+            "modalita_comunicativa": "Energica",
+            "attivita_preferite": [
+                "nuoto",
+                "palestra",
+                "uscite in città"
+            ]
+        },
+        "psychological_profile": {
+            "stile_comunicativo": "motivante",
+            "livello_iniziativa": "autonomo",
+            "approccio_emotivo": "familiare",
+            "energia_personale": "alta",
+            "routine_flessibilita": 8,
+            "scenario_rifiuto": "Cerco di motivare l'assistito ricordandogli i suoi obiettivi di autonomia.",
+            "contesto_lavorativo": "vivace",
+            "presenza_famiglia": "collaborativa",
+            "motivazione": [
+                "Sport e cura",
+                "Dinamicità"
+            ]
+        },
+        "raw_disponibilita": {
+            "orari_preferiti": [
+                "mattina",
+                "notte"
+            ],
+            "spostamenti": true,
+            "patente": true,
+            "automunito": true,
+            "disponibilita_immediata": "si"
+        },
+        "raw_valori_personali": {
+            "descrizione": "Profilo 'Medio' molto dinamico. Punti di forza: Spinta motivazionale e ottima gestione dell'attività fisica. Limite: A volte troppo insistente nel voler 'fare'. Scenario assistito depresso: Non mi arrendo, cerco sempre uno stimolo nuovo."
+        }
+    },
+    {
+        "id": "cg_007",
+        "user_id": "user_cg_007",
+        "raw_competenze_esperienze": {
+            "nome_completo": "Sonia Moretti",
+            "lingue": [
+                "Italiano"
+            ],
+            "regione": "Veneto",
+            "provincia": "Verona",
+            "disponibilita": [
+                "part-time"
+            ]
+        },
+        "raw_approccio_cura": {
+            "anni_esperienza": "5-10",
+            "tipologie_assistenza": [
+                "anziani",
+                "compagnia"
+            ],
+            "competenze_specifiche": [
+                "gestione casa",
+                "cucina tradizionale",
+                "ascolto attivo"
+            ],
+            "certificazioni": []
+        },
+        "raw_stile_relazionale": {
+            "preferenze_relazionali": "Presenza discreta e rassicurante.",
+            "modalita_comunicativa": "Discreta",
+            "attivita_preferite": [
+                "cucito",
+                "giardinaggio",
+                "chiacchiere"
+            ]
+        },
+        "psychological_profile": {
+            "stile_comunicativo": "osservatore",
+            "livello_iniziativa": "esecutivo",
+            "approccio_emotivo": "familiare",
+            "energia_personale": "calma",
+            "routine_flessibilita": 6,
+            "scenario_rifiuto": "Rispetto i tempi della persona, senza creare conflitti.",
+            "contesto_lavorativo": "tranquillo",
+            "presenza_famiglia": "discreta",
+            "motivazione": [
+                "Contatto umano",
+                "Integrazione reddito"
+            ]
+        },
+        "raw_disponibilita": {
+            "orari_preferiti": [
+                "mattina"
+            ],
+            "spostamenti": false,
+            "patente": false,
+            "automunito": false,
+            "disponibilita_immediata": "si"
+        },
+        "raw_valori_personali": {
+            "descrizione": "Profilo 'Medio' rassicurante. Punti di forza: Grande dolcezza e ottima gestione domestica. Limite: Non ha forza fisica per sollevamenti pesanti. Scenario famiglia invadente: Cerco di essere sempre gentile e diplomatica."
+        }
+    },
+    {
+        "id": "cg_008",
+        "user_id": "user_cg_008",
+        "raw_competenze_esperienze": {
+            "nome_completo": "Antonio Greco",
+            "lingue": [
+                "Italiano"
+            ],
+            "regione": "Veneto",
+            "provincia": "Verona",
+            "disponibilita": [
+                "full-time"
+            ]
+        },
+        "raw_approccio_cura": {
+            "anni_esperienza": "10+",
+            "tipologie_assistenza": [
+                "anziani",
+                "disabilità cronica"
+            ],
+            "competenze_specifiche": [
+                "igiene",
+                "pasti",
+                "gestione scadenze",
+                "piccole manutenzioni"
+            ],
+            "certificazioni": [
+                "Ex artigiano"
+            ]
+        },
+        "raw_stile_relazionale": {
+            "preferenze_relazionali": "Rispetto le regole della casa e pretendo ordine.",
+            "modalita_comunicativa": "Direttiva",
+            "attivita_preferite": [
+                "fai da te",
+                "notizie",
+                "orto"
+            ]
+        },
+        "psychological_profile": {
+            "stile_comunicativo": "pragmatico",
+            "livello_iniziativa": "autonomo",
+            "approccio_emotivo": "professionale",
+            "energia_personale": "stabile",
+            "routine_flessibilita": 1,
+            "scenario_rifiuto": "Se qualcosa va fatto a un'ora, va fatto. Non transigo sulla routine.",
+            "contesto_lavorativo": "tranquillo",
+            "presenza_famiglia": "distante",
+            "motivazione": [
+                "Dovere",
+                "Pensionamento attivo"
+            ]
+        },
+        "raw_disponibilita": {
+            "orari_preferiti": [
+                "diurno"
+            ],
+            "spostamenti": true,
+            "patente": true,
+            "automunito": true,
+            "disponibilita_immediata": "si"
+        },
+        "raw_valori_personali": {
+            "descrizione": "Profilo 'Borderline': Molta esperienza ma rigidità estrema. Punti di forza: Affidabilità assoluta e cura meticolosa dell'ambiente. Limite: Scarsa flessibilità, può scontrarsi con assistiti che vogliono cambiare programmi. Scenario imprevisto: Mi innervosisco se non è giustificato."
+        }
+    },
+    {
+        "id": "cg_009",
+        "user_id": "user_cg_009",
+        "raw_competenze_esperienze": {
+            "nome_completo": "Martina Costa",
+            "lingue": [
+                "Italiano",
+                "Inglese"
+            ],
+            "regione": "Veneto",
+            "provincia": "Verona",
+            "disponibilita": [
+                "part-time"
+            ]
+        },
+        "raw_approccio_cura": {
+            "anni_esperienza": "0-2",
+            "tipologie_assistenza": [
+                "supporto studio",
+                "integrazione sociale",
+                "tempo libero"
+            ],
+            "competenze_specifiche": [
+                "informatica",
+                "organizzazione eventi",
+                "social media"
+            ],
+            "certificazioni": [
+                "Laurea in Comunicazione"
+            ]
+        },
+        "raw_stile_relazionale": {
+            "preferenze_relazionali": "Linguaggio paritario, supporto all'autonomia.",
+            "modalita_comunicativa": "Energica",
+            "attivita_preferite": [
+                "cinema",
+                "informatica",
+                " concerti"
+            ]
+        },
+        "psychological_profile": {
+            "stile_comunicativo": "motivante",
+            "livello_iniziativa": "proattivo",
+            "approccio_emotivo": "equilibrato",
+            "energia_personale": "molto alta",
+            "routine_flessibilita": 10,
+            "scenario_rifiuto": "Provo a negoziare e a trovare un'alternativa stimolante.",
+            "contesto_lavorativo": "vivace",
+            "presenza_famiglia": "indifferente",
+            "motivazione": [
+                "Nuove sfide",
+                "Empatia generazionale"
+            ]
+        },
+        "raw_disponibilita": {
+            "orari_preferiti": [
+                "pomeriggio",
+                "sera"
+            ],
+            "spostamenti": true,
+            "patente": true,
+            "automunito": true,
+            "disponibilita_immediata": "si"
+        },
+        "raw_valori_personali": {
+            "descrizione": "Profilo 'Junior' brillante. Punti di forza: Perfetta per assistiti giovani, eccellente supporto tecnologico. Limite: Nessuna competenza per igiene intima o mobilizzazione. Scenario assistito annoiato: Invento subito qualcosa di originale da fare."
+        }
+    },
+    {
+        "id": "cg_010",
+        "user_id": "user_cg_010",
+        "raw_competenze_esperienze": {
+            "nome_completo": "Olga Ivanova",
+            "lingue": [
+                "Italiano (base)",
+                "Ucraino",
+                "Polacco"
+            ],
+            "regione": "Veneto",
+            "provincia": "Verona",
+            "disponibilita": [
+                "convivenza"
+            ]
+        },
+        "raw_approccio_cura": {
+            "anni_esperienza": "10+",
+            "tipologie_assistenza": [
+                "anziani non autosufficienti",
+                "Parkinson"
+            ],
+            "competenze_specifiche": [
+                "igiene totale",
+                "cucina sana",
+                "massaggi defaticanti",
+                "forza fisica"
+            ],
+            "certificazioni": []
+        },
+        "raw_stile_relazionale": {
+            "preferenze_relazionali": "Lavoro sodo e parlo poco.",
+            "modalita_comunicativa": "Discreta",
+            "attivita_preferite": [
+                "cucina",
+                "pulizia"
+            ]
+        },
+        "psychological_profile": {
+            "stile_comunicativo": "osservatore",
+            "livello_iniziativa": "esecutivo",
+            "approccio_emotivo": "equilibrato",
+            "energia_personale": "stabile",
+            "routine_flessibilita": 5,
+            "scenario_rifiuto": "Uso la mia forza e calma per convincere l'assistito.",
+            "contesto_lavorativo": "indifferente",
+            "presenza_famiglia": "qualsiasi",
+            "motivazione": [
+                "Lavoro stabile",
+                "Sicurezza"
+            ]
+        },
+        "raw_disponibilita": {
+            "orari_preferiti": [
+                "H24"
+            ],
+            "spostamenti": true,
+            "patente": false,
+            "automunito": false,
+            "disponibilita_immediata": "si"
+        },
+        "raw_valori_personali": {
+            "descrizione": "Profilo 'Complex': Altissima competenza pratica, barriera linguistica. Punti di forza: Cura maniacale dell'igiene e dell'alimentazione. Limite: Difficoltà a comprendere richieste astratte o psicologiche. Scenario emergenza: Reagisco con grande freddezza e senso pratico."
+        }
+    },
+    {
+        "id": "cg_011",
+        "user_id": "user_cg_011",
+        "raw_competenze_esperienze": {
+            "nome_completo": "Sonia Pavan",
+            "lingue": [
+                "Italiano"
+            ],
+            "regione": "Veneto",
+            "provincia": "Verona",
+            "disponibilita": [
+                "full-time"
+            ]
+        },
+        "raw_approccio_cura": {
+            "anni_esperienza": "5-10",
+            "tipologie_assistenza": [
+                "disabilità motoria",
+                "anziani"
+            ],
+            "competenze_specifiche": [
+                "mobilizzazione",
+                "gestione farmaci",
+                "supporto psicologico"
+            ],
+            "certificazioni": [
+                "OSS"
+            ]
+        },
+        "raw_stile_relazionale": {
+            "preferenze_relazionali": "Rapporto stabile e rassicurante.",
+            "modalita_comunicativa": "Calma",
+            "attivita_preferite": [
+                "giardinaggio",
+                "chiacchiere"
+            ]
+        },
+        "psychological_profile": {
+            "stile_comunicativo": "osservatore",
+            "livello_iniziativa": "collaborativo",
+            "approccio_emotivo": "empatico",
+            "energia_personale": "calma",
+            "routine_flessibilita": 6,
+            "scenario_rifiuto": "Ascolto con pazienza e cerco di mediare con calma.",
+            "contesto_lavorativo": "tranquillo",
+            "presenza_famiglia": "collaborativa",
+            "motivazione": [
+                "Affettività",
+                "Sicurezza"
+            ]
+        },
+        "raw_disponibilita": {
+            "orari_preferiti": [
+                "diurno"
+            ],
+            "spostamenti": true,
+            "patente": true,
+            "automunito": true,
+            "disponibilita_immediata": "si"
+        },
+        "raw_valori_personali": {
+            "descrizione": "Profilo 'Medio' eccellente. Punti di forza: Grandissima capacità rassicurante. Limite: Fatica sotto stress estremo. Scenario famiglia presente: Mi trovo bene se c'è dialogo costante."
+        }
+    },
+    {
+        "id": "cg_012",
+        "user_id": "user_cg_012",
+        "raw_competenze_esperienze": {
+            "nome_completo": "Davide Marrese",
+            "lingue": [
+                "Italiano",
+                "Inglese"
+            ],
+            "regione": "Veneto",
+            "provincia": "Verona",
+            "disponibilita": [
+                "part-time"
+            ]
+        },
+        "raw_approccio_cura": {
+            "anni_esperienza": "3-5",
+            "tipologie_assistenza": [
+                "disabilità cognitiva",
+                "giovani adulti"
+            ],
+            "competenze_specifiche": [
+                "stimolazione cognitiva",
+                "informatica",
+                "uscite esterne"
+            ],
+            "certificazioni": [
+                "Laurea in Scienze dell'Educazione"
+            ]
+        },
+        "raw_stile_relazionale": {
+            "preferenze_relazionali": "Stimolo continuo all'autonomia.",
+            "modalita_comunicativa": "Energica",
+            "attivita_preferite": [
+                "giochi cognitivi",
+                "tecnologia",
+                "musei"
+            ]
+        },
+        "psychological_profile": {
+            "stile_comunicativo": "motivante",
+            "livello_iniziativa": "proattivo",
+            "approccio_emotivo": "professionale",
+            "energia_personale": "alta",
+            "routine_flessibilita": 8,
+            "scenario_rifiuto": "Propongo opzioni diverse per far sentire l'assistito al comando della sua giornata.",
+            "contesto_lavorativo": "vivace",
+            "presenza_famiglia": "distante",
+            "motivazione": [
+                "Passione educativa",
+                "Ricerca innovazione"
+            ]
+        },
+        "raw_disponibilita": {
+            "orari_preferiti": [
+                "pomeriggio"
+            ],
+            "spostamenti": true,
+            "patente": true,
+            "automunito": true,
+            "disponibilita_immediata": "si"
+        },
+        "raw_valori_personali": {
+            "descrizione": "Profilo 'Medio' tech-savvy. Punti di forza: Creatività ed entusiasmo. Limite: Scarsa manualità per cure fisiche pesanti. Scenario assistito rifiuta attività: Cerco di spiegare il 'perché' per motivarlo."
+        }
+    },
+    {
+        "id": "cg_013",
+        "user_id": "user_cg_013",
+        "raw_competenze_esperienze": {
+            "nome_completo": "Simone Leone",
+            "lingue": [
+                "Italiano"
+            ],
+            "regione": "Veneto",
+            "provincia": "Verona",
+            "disponibilita": [
+                "full-time"
+            ]
+        },
+        "raw_approccio_cura": {
+            "anni_esperienza": "3-5",
+            "tipologie_assistenza": [
+                "disabilità motoria",
+                "paraplegia"
+            ],
+            "competenze_specifiche": [
+                "fisioterapia (basi)",
+                "sport adattato",
+                "mobilizzazione",
+                "forza"
+            ],
+            "certificazioni": [
+                "Personal Trainer"
+            ]
+        },
+        "raw_stile_relazionale": {
+            "preferenze_relazionali": "Rapporto dinamico e attivo.",
+            "modalita_comunicativa": "Motivante",
+            "attivita_preferite": [
+                "palestra",
+                "escursioni",
+                "sport"
+            ]
+        },
+        "psychological_profile": {
+            "stile_comunicativo": "motivante",
+            "livello_iniziativa": "autonomo",
+            "approccio_emotivo": "professionale",
+            "energia_personale": "molto alta",
+            "routine_flessibilita": 7,
+            "scenario_rifiuto": "Sfido l'assistito a superare i suoi limiti con ironia e grinta.",
+            "contesto_lavorativo": "vivace",
+            "presenza_famiglia": "distante",
+            "motivazione": [
+                "Sfida fisica",
+                "Supporto motivazionale"
+            ]
+        },
+        "raw_disponibilita": {
+            "orari_preferiti": [
+                "diurno"
+            ],
+            "spostamenti": true,
+            "patente": true,
+            "automunito": true,
+            "disponibilita_immediata": "si"
+        },
+        "raw_valori_personali": {
+            "descrizione": "Profilo 'Junior' sportivo. Punti di forza: Forza fisica e carica vitale coinvolgente. Limite: Può risultare poco sensibile a chi ha ritmi lenti. Scenario ambiente rurale: Mi piace molto, amo stare all'aperto."
+        }
+    },
+    {
+        "id": "cg_014",
+        "user_id": "user_cg_014",
+        "raw_competenze_esperienze": {
+            "nome_completo": "Chiara Galli",
+            "lingue": [
+                "Italiano"
+            ],
+            "regione": "Veneto",
+            "provincia": "Verona",
+            "disponibilita": [
+                "full-time"
+            ]
+        },
+        "raw_approccio_cura": {
+            "anni_esperienza": "0-2",
+            "tipologie_assistenza": [
+                "compagnia",
+                "gestione casa",
+                "anziani autosufficienti"
+            ],
+            "competenze_specifiche": [
+                "ordine",
+                "cucina",
+                "pianificazione",
+                "gentilezza"
+            ],
+            "certificazioni": []
+        },
+        "raw_stile_relazionale": {
+            "preferenze_relazionali": "Precisione e discrezione assoluta.",
+            "modalita_comunicativa": "Calma",
+            "attivita_preferite": [
+                "lettura",
+                "TV",
+                "ordine casa"
+            ]
+        },
+        "psychological_profile": {
+            "stile_comunicativo": "osservatore",
+            "livello_iniziativa": "esecutivo",
+            "approccio_emotivo": "equilibrato",
+            "energia_personale": "calma",
+            "routine_flessibilita": 2,
+            "scenario_rifiuto": "Seguo le direttive della famiglia senza prendere iniziative personali.",
+            "contesto_lavorativo": "tranquillo",
+            "presenza_famiglia": "attiva",
+            "motivazione": [
+                "Responsabilità",
+                "Lavoro strutturato"
+            ]
+        },
+        "raw_disponibilita": {
+            "orari_preferiti": [
+                "mattina",
+                "pomeriggio"
+            ],
+            "spostamenti": true,
+            "patente": true,
+            "automunito": true,
+            "disponibilita_immediata": "si"
+        },
+        "raw_valori_personali": {
+            "descrizione": "Profilo 'Junior' molto affidabile. Punti di forza: Precisione estrema nella gestione oraria e domestica. Limite: Non sa gestire situazioni di emergenza imprevista. Scenario famiglia presente: Perfetto, preferisco avere istruzioni chiare."
+        }
+    },
+    {
+        "id": "cg_015",
+        "user_id": "user_cg_015",
+        "raw_competenze_esperienze": {
+            "nome_completo": "Lucia Romano",
+            "lingue": [
+                "Italiano",
+                "Francese"
+            ],
+            "regione": "Veneto",
+            "provincia": "Verona",
+            "disponibilita": [
+                "full-time"
+            ]
+        },
+        "raw_approccio_cura": {
+            "anni_esperienza": "10+",
+            "tipologie_assistenza": [
+                "post-ictus",
+                "Sclerosi Multipla"
+            ],
+            "competenze_specifiche": [
+                "mobilizzazione",
+                "esercizi logopedici (basi)",
+                "pazienza infinita"
+            ],
+            "certificazioni": [
+                "OSS"
+            ]
+        },
+        "raw_stile_relazionale": {
+            "preferenze_relazionali": "Lavoro di cura profondo e metodico.",
+            "modalita_comunicativa": "Calma",
+            "attivita_preferite": [
+                "riabilitazione",
+                "ascolto",
+                "puzzle"
+            ]
+        },
+        "psychological_profile": {
+            "stile_comunicativo": "pragmatico",
+            "livello_iniziativa": "autonomo",
+            "approccio_emotivo": "equilibrato",
+            "energia_personale": "calma",
+            "routine_flessibilita": 5,
+            "scenario_rifiuto": "Comprendo la frustrazione e rimando l'attività a un momento di maggiore relax.",
+            "contesto_lavorativo": "tranquillo",
+            "presenza_famiglia": "discreta",
+            "motivazione": [
+                "Dignità del malato",
+                "Esperienza"
+            ]
+        },
+        "raw_disponibilita": {
+            "orari_preferiti": [
+                "diurno"
+            ],
+            "spostamenti": true,
+            "patente": true,
+            "automunito": true,
+            "disponibilita_immediata": "si"
+        },
+        "raw_valori_personali": {
+            "descrizione": "Profilo 'Esperto' pragmatico. Punti di forza: Straordinaria resilienza e precisione riabilitativa. Limite: A volte troppo silenziosa. Scenario stress estremo: Mantengo la calma e seguo il protocollo acquisito in anni di esperienza."
+        }
+    },
+    {
+        "id": "cg_016",
+        "user_id": "user_cg_016",
+        "raw_competenze_esperienze": {
+            "nome_completo": "Sara Luna",
+            "lingue": [
+                "Italiano"
+            ],
+            "regione": "Veneto",
+            "provincia": "Verona",
+            "disponibilita": [
+                "part-time"
+            ]
+        },
+        "raw_approccio_cura": {
+            "anni_esperienza": "3-5",
+            "tipologie_assistenza": [
+                "compagnia",
+                "anziani soli",
+                "supporto psicologico"
+            ],
+            "competenze_specifiche": [
+                "arteterapia",
+                "ascolto",
+                "cucina creativa"
+            ],
+            "certificazioni": []
+        },
+        "raw_stile_relazionale": {
+            "preferenze_relazionali": "Rapporto quasi familiare, molta dolcezza.",
+            "modalita_comunicativa": "Empatica",
+            "attivita_preferite": [
+                "pittura",
+                "chiacchiere",
+                "cucinare dolci"
+            ]
+        },
+        "psychological_profile": {
+            "stile_comunicativo": "motivante",
+            "livello_iniziativa": "ricettivo",
+            "approccio_emotivo": "familiare",
+            "energia_personale": "dolce",
+            "routine_flessibilita": 10,
+            "scenario_rifiuto": "Vengo travolta dall'emozione ma cerco di consolare l'assistito.",
+            "contesto_lavorativo": "vivace",
+            "presenza_famiglia": "collaborativa",
+            "motivazione": [
+                "Amore per il prossimo",
+                "Condivisione"
+            ]
+        },
+        "raw_disponibilita": {
+            "orari_preferiti": [
+                "pomeriggio",
+                "sera"
+            ],
+            "spostamenti": false,
+            "patente": false,
+            "automunito": false,
+            "disponibilita_immediata": "si"
+        },
+        "raw_valori_personali": {
+            "descrizione": "Profilo 'Complex' (Alta empatia, scarsa struttura). Punti di forza: Straordinaria umanità e creatività. Limite: Disorganizzata, fatica a ricordare orari medicinali o routine rigide. Scenario precisione richiesta: Ho bisogno che qualcuno mi ricordi i compiti tecnici."
+        }
+    },
+    {
+        "id": "cg_017",
+        "user_id": "user_cg_017",
+        "raw_competenze_esperienze": {
+            "nome_completo": "Luca Marini",
+            "lingue": [
+                "Italiano",
+                "Inglese"
+            ],
+            "regione": "Veneto",
+            "provincia": "Verona",
+            "disponibilita": [
+                "full-time"
+            ]
+        },
+        "raw_approccio_cura": {
+            "anni_esperienza": "5-10",
+            "tipologie_assistenza": [
+                "disabilità motoria",
+                "paraplegia"
+            ],
+            "competenze_specifiche": [
+                "automazione domotica",
+                "guida mezzi adattati",
+                "mobilizzazione attiva"
+            ],
+            "certificazioni": [
+                "OSS",
+                "Patente B speciale"
+            ]
+        },
+        "raw_stile_relazionale": {
+            "preferenze_relazionali": "Collaborazione tecnica per un'autonomia tecnologica.",
+            "modalita_comunicativa": "Diretta",
+            "attivita_preferite": [
+                "videogiochi",
+                "progetti tech",
+                "viaggi"
+            ]
+        },
+        "psychological_profile": {
+            "stile_comunicativo": "diretto",
+            "livello_iniziativa": "proattivo",
+            "approccio_emotivo": "professionale",
+            "energia_personale": "alta",
+            "routine_flessibilita": 4,
+            "scenario_rifiuto": "Insisto tecnicamente per risolvere il problema in modo rapido.",
+            "contesto_lavorativo": "tranquillo",
+            "presenza_famiglia": "distante",
+            "motivazione": [
+                "Efficienza",
+                "Passione tech"
+            ]
+        },
+        "raw_disponibilita": {
+            "orari_preferiti": [
+                "diurno"
+            ],
+            "spostamenti": true,
+            "patente": true,
+            "automunito": true,
+            "disponibilita_immediata": "si"
+        },
+        "raw_valori_personali": {
+            "descrizione": "Profilo 'Complex' (High tech, rischio burnout). Punti di forza: Eccezionale per giovani con disabilità motoria e interesse tech. Limite: Facilmente irritabile in contesti troppo rumorosi o disordinati. Scenario caos domestico: Tendo a isolarmi con l'assistito."
+        }
+    },
+    {
+        "id": "cg_018",
+        "user_id": "user_cg_018",
+        "raw_competenze_esperienze": {
+            "nome_completo": "Paolo Ricci",
+            "lingue": [
+                "Italiano"
+            ],
+            "regione": "Veneto",
+            "provincia": "Verona",
+            "disponibilita": [
+                "full-time"
+            ]
+        },
+        "raw_approccio_cura": {
+            "anni_esperienza": "3-5",
+            "tipologie_assistenza": [
+                "sostegno sociale",
+                "disabilità intellettiva"
+            ],
+            "competenze_specifiche": [
+                "gestione gruppi",
+                "comunicazione",
+                "sicurezza"
+            ],
+            "certificazioni": [
+                "Animatore sociale"
+            ]
+        },
+        "raw_stile_relazionale": {
+            "preferenze_relazionali": "Molta socialità e inclusione.",
+            "modalita_comunicativa": "Energica",
+            "attivita_preferite": [
+                "teatro",
+                "mostre",
+                "volontariato"
+            ]
+        },
+        "psychological_profile": {
+            "stile_comunicativo": "motivante",
+            "livello_iniziativa": "proattivo",
+            "approccio_emotivo": "familiare",
+            "energia_personale": "vivace",
+            "routine_flessibilita": 9,
+            "scenario_rifiuto": "Coinvolgo altre persone per far pesare meno lo sforzo all'assistito.",
+            "contesto_lavorativo": "vivace",
+            "presenza_famiglia": "collaborativa",
+            "motivazione": [
+                "Integrazione",
+                "Divertimento"
+            ]
+        },
+        "raw_disponibilita": {
+            "orari_preferiti": [
+                "diurno",
+                "weekend"
+            ],
+            "spostamenti": true,
+            "patente": true,
+            "automunito": true,
+            "disponibilita_immediata": "si"
+        },
+        "raw_valori_personali": {
+            "descrizione": "Profilo 'Medio' eccellente relazionale. Punti di forza: Bravissimo a far uscire di casa l'assistito e a socializzare. Limite: Scarsa precisione medica. Scenario assistito triste: Cerco subito di portarlo a vedere amici o eventi."
+        }
+    },
+    {
+        "id": "cg_019",
+        "user_id": "user_cg_019",
+        "raw_competenze_esperienze": {
+            "nome_completo": "Anna Ferrari",
+            "lingue": [
+                "Italiano"
+            ],
+            "regione": "Veneto",
+            "provincia": "Verona",
+            "disponibilita": [
+                "part-time"
+            ]
+        },
+        "raw_approccio_cura": {
+            "anni_esperienza": "5-10",
+            "tipologie_assistenza": [
+                "anziani",
+                "gestione domestica"
+            ],
+            "competenze_specifiche": [
+                "cucina salutare",
+                "cura piante",
+                "ascolto",
+                "farmaci"
+            ],
+            "certificazioni": [
+                "Corso alimentazione speciale"
+            ]
+        },
+        "raw_stile_relazionale": {
+            "preferenze_relazionali": "Cura della casa e della persona con dolcezza.",
+            "modalita_comunicativa": "Calma",
+            "attivita_preferite": [
+                "cucinare",
+                "leggere",
+                "ascolto"
+            ]
+        },
+        "psychological_profile": {
+            "stile_comunicativo": "osservatore",
+            "livello_iniziativa": "esecutivo",
+            "approccio_emotivo": "equilibrato",
+            "energia_personale": "stabile",
+            "routine_flessibilita": 5,
+            "scenario_rifiuto": "Cerco di convincere parlando di benefici futuri (es. la cena buona).",
+            "contesto_lavorativo": "tranquillo",
+            "presenza_famiglia": "discreta",
+            "motivazione": [
+                "Stabilità",
+                "Benevolenza"
+            ]
+        },
+        "raw_disponibilita": {
+            "orari_preferiti": [
+                "mattina"
+            ],
+            "spostamenti": false,
+            "patente": true,
+            "automunito": true,
+            "disponibilita_immediata": "si"
+        },
+        "raw_valori_personali": {
+            "descrizione": "Profilo 'Medio' rassicurante e domestico. Punti di forza: Eccezionale cura dell'alimentazione e pulizia. Limite: Non ha pazienza per assistiti aggressivi. Scenario rifiuto pappe: Provo a cambiare ricetta seguendo i gusti."
+        }
+    },
+    {
+        "id": "cg_020",
+        "user_id": "user_cg_020",
+        "raw_competenze_esperienze": {
+            "nome_completo": "Giorgio Conti",
+            "lingue": [
+                "Italiano",
+                "Tedesco"
+            ],
+            "regione": "Veneto",
+            "provincia": "Verona",
+            "disponibilita": [
+                "full-time"
+            ]
+        },
+        "raw_approccio_cura": {
+            "anni_esperienza": "5-10",
+            "tipologie_assistenza": [
+                "disabilità motoria",
+                "viaggi assistiti"
+            ],
+            "competenze_specifiche": [
+                "guida lunga distanza",
+                "sci adattato",
+                "sicurezza montagna"
+            ],
+            "certificazioni": [
+                "Accompagnatore turistico disabili"
+            ]
+        },
+        "raw_stile_relazionale": {
+            "preferenze_relazionali": "Avventura e indipendenza assistita.",
+            "modalita_comunicativa": "Energica",
+            "attivita_preferite": [
+                "viaggi",
+                "montagna",
+                "sport"
+            ]
+        },
+        "psychological_profile": {
+            "stile_comunicativo": "motivante",
+            "livello_iniziativa": "proattivo",
+            "approccio_emotivo": "professionale",
+            "energia_personale": "molto alta",
+            "routine_flessibilita": 9,
+            "scenario_rifiuto": "Cerco di trasformare l'imprevisto in una piccola avventura.",
+            "contesto_lavorativo": "vivace",
+            "presenza_famiglia": "indifferente",
+            "motivazione": [
+                "Scoperta",
+                "Libertà"
+            ]
+        },
+        "raw_disponibilita": {
+            "orari_preferiti": [
+                "variabile"
+            ],
+            "spostamenti": true,
+            "patente": true,
+            "automunito": true,
+            "disponibilita_immediata": "si"
+        },
+        "raw_valori_personali": {
+            "descrizione": "Profilo 'Medio' dinamico internazionale. Punti di forza: Perfetto per chi non vuole rinunciare a viaggiare. Limite: Fatica a stare troppe ore chiuso in casa. Scenario isolamento: Cerco di organizzare uscite anche in piccoli paesi."
+        }
+    }
+]

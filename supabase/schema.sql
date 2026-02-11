@@ -6,6 +6,8 @@ create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   role text check (role in ('disabled', 'caregiver', 'supervisor')) not null,
   full_name text,
+  region text,
+  province text,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );

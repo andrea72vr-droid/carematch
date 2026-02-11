@@ -2,16 +2,170 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --background: #ffffff;
+  --foreground: #09090b;
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Industrial Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e4e4e7;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d4d4d8;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
 html,
 body {
+  max-width: 100vw;
+  overflow-x: hidden;
   height: 100%;
 }
 
 body {
-  @apply bg-slate-950 text-slate-50 antialiased;
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-sans);
+  letter-spacing: -0.015em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  @apply text-brand-400 hover:text-brand-300;
+/* Background Textures */
+.technical-grid {
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
 }
 
+.noise-bg {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
+  @apply opacity-10 mix-blend-multiply pointer-events-none fixed inset-0 z-[-1];
+}
+
+/* Spotlight Logic */
+.spotlight-grid {
+  --mouse-x: -1000px;
+  --mouse-y: -1000px;
+}
+
+.spotlight-card {
+  position: relative;
+  @apply border border-neutral-200 bg-white/50 backdrop-blur-sm overflow-hidden;
+}
+
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(0, 0, 0, 0.03), transparent 40%);
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.spotlight-grid:hover .spotlight-card::before {
+  opacity: 1;
+}
+
+/* Components */
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.shiny-button {
+  @apply relative overflow-hidden transition-transform active:scale-95;
+  background: linear-gradient(#ffffff, #ffffff) padding-box,
+    conic-gradient(from var(--gradient-angle), transparent 20%, #e5e5e5, transparent 50%) border-box;
+  border: 1px solid #e5e5e5;
+  animation: spinShiny 3s linear infinite;
+  color: #000000;
+}
+
+@keyframes spinShiny {
+  from {
+    --gradient-angle: 0deg;
+  }
+
+  to {
+    --gradient-angle: 360deg;
+  }
+}
+
+/* Custom Controls */
+.toggle-switch {
+  @apply relative w-9 h-5 bg-neutral-200 rounded-full cursor-pointer transition-colors duration-300;
+}
+
+.toggle-switch::after {
+  content: "";
+  @apply absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full transition-transform duration-300 shadow-sm;
+}
+
+.toggle-switch.active {
+  @apply bg-neutral-900;
+}
+
+.toggle-switch.active::after {
+  @apply translate-x-4;
+}
+
+.custom-checkbox {
+  @apply appearance-none w-4 h-4 border border-neutral-300 rounded bg-white cursor-pointer transition-all;
+  display: grid;
+  place-content: center;
+}
+
+.custom-checkbox::before {
+  content: "";
+  @apply w-2.5 h-2.5 scale-0 transition-transform duration-150 shadow-[inset_1em_1em_white];
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.custom-checkbox:checked {
+  @apply bg-neutral-100 border-neutral-100;
+}
+
+.custom-checkbox:checked::before {
+  @apply scale-100 shadow-[inset_1em_1em_black];
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-neutral-200 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-neutral-300;
+}

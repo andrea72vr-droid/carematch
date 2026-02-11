@@ -2,97 +2,272 @@
 
 import { FormEvent, useState } from "react";
 import { supabaseBrowserClient } from "@/lib/supabaseClient";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+
+type AuthMode = "magic" | "login" | "register";
 
 export default function LoginPage() {
+  const router = useRouter();
+  const [mode, setMode] = useState<AuthMode>("login");
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
-    "idle"
-  );
+  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [region, setRegion] = useState("");
+  const [province, setProvince] = useState("");
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
-  async function handleSubmit(e: FormEvent) {
+  async function handlePasswordLogin(e: FormEvent) {
     e.preventDefault();
-    setStatus("sending");
+    setLoading(true);
     setMessage(null);
 
     try {
       const supabase = supabaseBrowserClient();
-      const origin =
-        typeof window !== "undefined" ? window.location.origin : "";
-
-      const { error } = await supabase.auth.signInWithOtp({
-        email,
-        options: {
-          emailRedirectTo: `${origin}/auth/callback`
-        }
+      const trimmedEmail = email.trim();
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: trimmedEmail,
+        password,
       });
 
-      if (error) {
-        console.error(error);
-        setStatus("error");
-        setMessage(
-          "Non siamo riusciti a inviare il link. Controlla l'email e riprova."
-        );
-        return;
-      }
-
-      setStatus("sent");
-      setMessage(
-        "Ti abbiamo inviato un link via email. Aprilo dallo stesso dispositivo per entrare."
-      );
-    } catch (err) {
+      if (error) throw error;
+      if (data.session) router.push("/dashboard");
+    } catch (err: any) {
       console.error(err);
-      setStatus("error");
-      setMessage("Qualcosa è andato storto. Riprova fra qualche minuto.");
+      setMessage("Errore: " + err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleSignUp(e: FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    setMessage(null);
+    try {
+      const supabase = supabaseBrowserClient();
+      const trimmedEmail = email.trim();
+      const { data, error } = await supabase.auth.signUp({
+        email: trimmedEmail,
+        password,
+        options: {
+          data: {
+            full_name: fullName,
+            region: region,
+            province: province
+          }
+        }
+      });
+      if (error) throw error;
+
+      if (data.session) {
+        router.push("/dashboard");
+      } else {
+        setMessage("Registrazione completata. Se richiesto, conferma l'email per procedere.");
+      }
+    } catch (err: any) {
+      console.error(err);
+      setMessage("Errore: " + err.message);
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
-    <main className="flex flex-1 flex-col justify-center">
-      <div className="max-w-md rounded-2xl border border-slate-800 bg-slate-900/70 p-6">
-        <h1 className="text-2xl font-semibold text-brand-100">
-          Accedi a Carematch
-        </h1>
-        <p className="mt-2 text-sm text-slate-200">
-          Per questa demo usiamo un <strong>link magico via email</strong>.
-          Niente password da ricordare.
-        </p>
+    <main className="min-h-screen bg-white flex items-center justify-center p-6 relative">
+      <div className="absolute inset-0 bg-neutral-50 z-0" />
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-xs font-medium text-slate-200"
+      <div className="w-full max-w-[400px] relative z-10 animate-slide-up">
+        <div className="mb-10 text-center">
+          <Link href="/" className="inline-flex items-center gap-2 mb-4">
+            <div className="w-5 h-5 bg-black rounded-[2px]" />
+            <span className="text-lg font-bold tracking-tight text-neutral-900">Carematch OS</span>
+          </Link>
+          <p className="text-xs font-medium text-neutral-500 uppercase tracking-widest font-mono">Authentication Gateway</p>
+        </div>
+
+        <div className="bg-white border border-neutral-200 p-8 rounded-2xl shadow-xl">
+          <div className="flex p-1 bg-neutral-100 rounded-lg mb-8">
+            <button
+              onClick={() => setMode("login")}
+              className={`flex-1 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-md transition-all ${mode !== "register" ? "bg-white text-black shadow-sm" : "text-neutral-500 hover:text-neutral-700"}`}
             >
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-50 outline-none ring-brand-500/50 focus:border-brand-400 focus:ring-2"
-              placeholder="nome@esempio.it"
-            />
+              Login
+            </button>
+            <button
+              onClick={() => setMode("register")}
+              className={`flex-1 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-md transition-all ${mode === "register" ? "bg-white text-black shadow-sm" : "text-neutral-500 hover:text-neutral-700"}`}
+            >
+              Register
+            </button>
           </div>
 
-          <button
-            type="submit"
-            disabled={status === "sending" || !email}
-            className="w-full rounded-full bg-brand-500 px-4 py-2 text-sm font-medium text-white shadow hover:bg-brand-400 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {status === "sending" ? "Invio in corso..." : "Mandami il link"}
-          </button>
-        </form>
+          <form onSubmit={mode === "register" ? handleSignUp : handlePasswordLogin} className="space-y-6">
+            {mode === "register" && (
+              <>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold uppercase text-neutral-500 font-mono tracking-widest">Full Name</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="John Doe"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-sm text-neutral-900 focus:border-black focus:ring-1 focus:ring-black outline-none transition-all"
+                  />
+                </div>
 
-        {message && (
-          <p className="mt-4 text-xs text-slate-200">
-            {message}
-          </p>
-        )}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold uppercase text-neutral-500 font-mono tracking-widest">Regione</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Lazio"
+                      value={region}
+                      onChange={(e) => setRegion(e.target.value)}
+                      className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-sm text-neutral-900 focus:border-black focus:ring-1 focus:ring-black outline-none transition-all"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold uppercase text-neutral-500 font-mono tracking-widest">Provincia</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Roma"
+                      value={province}
+                      onChange={(e) => setProvince(e.target.value)}
+                      className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-sm text-neutral-900 focus:border-black focus:ring-1 focus:ring-black outline-none transition-all"
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold uppercase text-neutral-500 font-mono tracking-widest">Email Address</label>
+              <input
+                type="email"
+                required
+                placeholder="name@company.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-sm text-neutral-900 focus:border-black focus:ring-1 focus:ring-black outline-none transition-all"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold uppercase text-neutral-500 font-mono tracking-widest">Password</label>
+              <input
+                type="password"
+                required
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-sm text-neutral-900 focus:border-black focus:ring-1 focus:ring-black outline-none transition-all"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full shiny-button py-3 text-xs font-bold text-black rounded-full transition-all"
+            >
+              {loading ? "PROCESSO IN CORSO..." : mode === "register" ? "CREA ACCOUNT" : "AUTENTICAZIONE"}
+            </button>
+          </form>
+
+
+          <div className="relative flex items-center justify-center my-8">
+            <div className="w-full h-px bg-neutral-200" />
+            <span className="absolute px-4 text-[9px] font-bold tracking-[0.3em] text-neutral-400 uppercase bg-white">Dev Access</span>
+          </div>
+
+          <div className="grid grid-cols-1 gap-3">
+            <button
+              type="button"
+              onClick={() => {
+                document.cookie = "demo_mode=true; path=/";
+                document.cookie = "demo_role=supervisor; path=/";
+                router.push("/dashboard");
+              }}
+              className="w-full py-3 text-[10px] font-bold text-amber-600 border border-amber-200 rounded-full hover:bg-amber-50 transition-all uppercase tracking-widest"
+            >
+              Demo Amministratore
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                document.cookie = "demo_mode=true; path=/";
+                document.cookie = "demo_role=disabled; path=/";
+                router.push("/dashboard");
+              }}
+              className="w-full py-3 text-[10px] font-bold text-neutral-500 border border-neutral-200 rounded-full hover:bg-neutral-50 transition-all uppercase tracking-widest"
+            >
+              Demo Assistito/Famiglia
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                document.cookie = "demo_mode=true; path=/";
+                document.cookie = "demo_role=caregiver; path=/";
+                router.push("/dashboard");
+              }}
+              className="w-full py-3 text-[10px] font-bold text-neutral-500 border border-neutral-200 rounded-full hover:bg-neutral-50 transition-all uppercase tracking-widest"
+            >
+              Demo Badante/Caregiver
+            </button>
+          </div>
+
+          {message && (
+            <div className={`mt-6 p-4 text-[11px] font-mono text-center border rounded-xl animate-in fade-in slide-in-from-top-2 duration-300 ${message.includes("not confirmed")
+              ? "bg-amber-50 border-amber-200 text-amber-800"
+              : "bg-neutral-50 border-neutral-200 text-neutral-600"
+              }`}>
+              {message.includes("not confirmed") ? (
+                <div className="space-y-3 text-center">
+                  <p className="font-bold uppercase tracking-tight">⚠️ Azione Richiesta</p>
+                  <p>L'account è stato creato ma devi confermare l'email per accedere.</p>
+
+                  <div className="flex flex-col gap-2 pt-2">
+                    <button
+                      onClick={() => {
+                        document.cookie = "demo_mode=true; path=/";
+                        document.cookie = "demo_role=supervisor; path=/";
+                        window.location.href = "/dashboard";
+                      }}
+                      className="w-full py-2 bg-amber-200 text-amber-900 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-amber-300 transition-all shadow-sm"
+                    >
+                      Entra in Modalità Demo (Subito)
+                    </button>
+                  </div>
+
+                  <div className="h-px bg-amber-200 my-2" />
+                  <p className="text-[9px] leading-relaxed opacity-80 italic">
+                    TIP: Puoi disabilitare la conferma email in <br />
+                    <span className="font-bold">Authentication → Providers → Email</span> <br />
+                    nella tua dashboard Supabase.
+                  </p>
+                </div>
+              ) : (
+                message
+              )}
+            </div>
+          )}
+        </div>
+
+        <div className="mt-8 text-center flex flex-col gap-2">
+          <button
+            className="text-[10px] font-mono text-neutral-400 hover:text-neutral-900 uppercase tracking-tighter transition-colors"
+          >
+            Password dimenticata?
+          </button>
+          <Link href="/" className="text-[10px] font-mono text-neutral-400 hover:text-neutral-900 uppercase tracking-tighter transition-colors">
+            ← Torna al sito principale
+          </Link>
+        </div>
       </div>
-    </main>
+    </main >
   );
 }
-

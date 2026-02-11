@@ -4,7 +4,10 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Carematch",
   description:
-    "Mediatore relazionale intelligente per l'incontro tra persone con disabilità e badanti."
+    "Mediatore relazionale intelligente per l'incontro tra persone con disabilità e badanti.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
@@ -14,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="it">
-      <body className="min-h-screen bg-slate-950 text-slate-50">
+      <body className="min-h-screen">
         <div className="mx-auto flex min-h-screen max-w-5xl flex-col px-4 py-6">
           {children}
         </div>
