@@ -31,9 +31,14 @@ export default function DashboardRouter() {
 
       const { data: profile } = await supabase
         .from("profiles")
-        .select("role")
+        .select("role, onboarding_status")
         .eq("id", session.user.id)
         .maybeSingle();
+
+      if (profile?.onboarding_status !== "completed") {
+        router.push("/onboarding");
+        return;
+      }
 
       if (profile?.role) {
         const r = profile.role as Role;
