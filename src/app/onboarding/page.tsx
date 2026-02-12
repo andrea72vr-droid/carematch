@@ -59,8 +59,16 @@ export default function OnboardingPage() {
                 .maybeSingle();
 
             if (profile) {
-                setStatus(profile.onboarding_status || "started");
-                setRole(userRecord?.role as Role);
+                let initialStatus = profile.onboarding_status || "started";
+                const userRole = userRecord?.role as Role;
+
+                // Se il ruolo è già stato scelto (es. in registrazione) ma lo status è 'started', avanziamo
+                if (initialStatus === "started" && userRole) {
+                    initialStatus = "role_done";
+                }
+
+                setStatus(initialStatus);
+                setRole(userRole);
                 setFirstName(profile.nome || "");
                 setLastName(profile.cognome || "");
                 setCity(profile.citta || "");
@@ -176,7 +184,7 @@ export default function OnboardingPage() {
                 {status === "started" && (
                     <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
                         <div className="text-center mb-10">
-                            <h1 className="text-4xl font-black tracking-tighter text-black mb-4">Come vuoi usare <span className="text-neutral-400 italic serif">CareMatch?</span></h1>
+                            <h1 className="text-4xl font-black tracking-tighter text-black mb-4">Chi <span className="text-neutral-400 italic serif">sei?</span></h1>
                             <p className="text-sm text-neutral-500">Seleziona la tua modalità di accesso per iniziare.</p>
                         </div>
 

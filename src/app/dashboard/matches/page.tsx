@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { supabaseBrowserClient } from "@/lib/supabaseClient";
 import { CompatibilityCard } from "@/components/matches/CompatibilityCard";
 import { MatchScore } from "@/lib/matchingAlgorithm";
@@ -29,18 +30,20 @@ export default function MatchesPage() {
     const [personas, setPersonas] = useState<any[]>([]);
     const [selectedPersona, setSelectedPersona] = useState<any>(null);
     const [userRole, setUserRole] = useState<string | null>(null);
+    const [completionScore, setCompletionScore] = useState<number>(0);
+    const [isCheckingProfile, setIsCheckingProfile] = useState(true);
 
     // Initial fetch of personas and user role
     useEffect(() => {
         async function init() {
             try {
+                const isDemo = document.cookie.includes("demo_mode=true");
+
                 // Fetch structured personas for testing
                 const personasRes = await fetch("/test-data/structured_disabled_profiles.json");
                 if (personasRes.ok) {
                     const personasData = await personasRes.json();
                     setPersonas(personasData.disabled_profiles);
-                    // Default to the first persona if in demo/test mode
-                    const isDemo = document.cookie.includes("demo_mode=true");
                     if (isDemo && personasData.disabled_profiles?.length > 0) {
                         setSelectedPersona(personasData.disabled_profiles[2] || personasData.disabled_profiles[0]);
                     }
@@ -49,17 +52,21 @@ export default function MatchesPage() {
                 const supabase = supabaseBrowserClient();
                 const { data: { user } } = await supabase.auth.getUser();
                 if (user) {
-                    const { data } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
+                    const { data } = await supabase.from("profiles").select("role, completion_score").eq("id", user.id).maybeSingle();
                     setUserRole(data?.role || null);
-                } else if (document.cookie.includes("demo_mode=true")) {
+                    setCompletionScore(data?.completion_score || 0);
+                } else if (isDemo) {
                     setUserRole("supervisor");
+                    setCompletionScore(85); // Demo always passed
                 }
 
-                if (!document.cookie.includes("demo_mode=true")) {
+                setIsCheckingProfile(false);
+                if (!isDemo) {
                     setLoading(false);
                 }
             } catch (e) {
                 console.error("Failed to init MatchesPage", e);
+                setIsCheckingProfile(false);
                 setLoading(false);
             }
         }
@@ -68,6 +75,9 @@ export default function MatchesPage() {
 
     useEffect(() => {
         async function fetchMatches() {
+            // Se stiamo controllando il profilo o il punteggio è basso, non facciamo nulla
+            if (isCheckingProfile || completionScore < 70) return;
+
             // Se siamo in demo e non abbiamo ancora scelto una persona, aspettiamo l'init
             const isDemo = document.cookie.includes("demo_mode=true");
             if (isDemo && !selectedPersona) return;
@@ -118,7 +128,31 @@ export default function MatchesPage() {
             }
         }
         fetchMatches();
-    }, [selectedPersona, userRole]);
+    }, [selectedPersona, userRole, completionScore, isCheckingProfile]);
+
+    if (!isCheckingProfile && completionScore < 70) {
+        const profileLink = userRole === "caregiver" ? "/dashboard/profile/caregiver" : "/dashboard/profile/disabled";
+
+        return (
+            <div className="p-8 lg:p-12 space-y-12 max-w-2xl mx-auto py-20 flex flex-col items-center text-center">
+                <div className="w-20 h-20 rounded-full bg-rose-50 flex items-center justify-center text-3xl mb-8 border border-rose-100">
+                    🔒
+                </div>
+                <h1 className="text-3xl font-black text-black tracking-tight mb-4">Matching Disattivato</h1>
+                <p className="text-sm text-neutral-500 leading-relaxed mb-10">
+                    Per garantire la qualità degli incontri e la sicurezza della piattaforma, richiediamo che il tuo profilo sia completo almeno al <span className="text-black font-bold">70%</span>.
+                    <br />
+                    Attualmente il tuo punteggio è: <span className="text-rose-500 font-bold">{completionScore}%</span>
+                </p>
+                <Link
+                    href={profileLink}
+                    className="bg-black text-white px-10 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-black/10"
+                >
+                    Completa Profilo
+                </Link>
+            </div>
+        );
+    }
 
     return (
         <div className="p-8 lg:p-12 space-y-12 max-w-5xl mx-auto pb-32">
@@ -164,7 +198,7 @@ export default function MatchesPage() {
                     </div>
                 )}
 
-                {loading && (
+                {(loading || isCheckingProfile) && (
                     <div className="flex flex-col items-center justify-center py-20 gap-4">
                         <div className="w-6 h-6 border-2 border-black border-t-transparent rounded-full animate-spin" />
                         <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Analisi profili in corso...</p>
@@ -193,7 +227,7 @@ export default function MatchesPage() {
                     })}
                 </div>
 
-                {!loading && matches.length === 0 && !error && (
+                {!loading && !isCheckingProfile && matches.length === 0 && !error && (
                     <div className="text-center py-32 bg-white rounded-3xl border border-neutral-100 border-dashed">
                         <p className="text-xs font-bold text-neutral-300 uppercase tracking-widest">Nessun risultato rilevante trovato</p>
                     </div>

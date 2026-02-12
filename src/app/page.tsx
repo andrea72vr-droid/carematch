@@ -15,11 +15,11 @@ export default function HomePage() {
             <span className="text-[10px] bg-neutral-50 border border-neutral-200 px-1.5 py-0.5 rounded text-neutral-400 font-mono">v1.2</span>
           </div>
           <div className="flex items-center gap-6">
-            <Link href="/login" className="text-xs font-medium text-neutral-500 hover:text-black transition-colors">
-              Documentazione
-            </Link>
-            <Link href="/login" className="px-4 py-1.5 bg-black text-white text-xs font-semibold rounded-md hover:bg-neutral-800 transition-all shadow-sm">
+            <Link href="/login" className="text-xs font-bold text-black border border-neutral-200 px-4 py-1.5 rounded-md hover:bg-neutral-50 transition-all shadow-sm">
               Accedi
+            </Link>
+            <Link href="/login?mode=register" className="px-4 py-1.5 bg-black text-white text-xs font-semibold rounded-md hover:bg-neutral-800 transition-all shadow-sm">
+              Registrati
             </Link>
           </div>
         </div>
