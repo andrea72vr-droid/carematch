@@ -12,8 +12,10 @@ export default function LoginPage() {
   const [mode, setMode] = useState<AuthMode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [region, setRegion] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [role, setRole] = useState<"disabile" | "badante">("disabile");
+  const [city, setCity] = useState("");
   const [province, setProvince] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -53,9 +55,11 @@ export default function LoginPage() {
         password,
         options: {
           data: {
-            full_name: fullName,
-            region: region,
-            province: province
+            first_name: firstName,
+            last_name: lastName,
+            role: role,
+            citta: city,
+            provincia: province
           }
         }
       });
@@ -106,27 +110,52 @@ export default function LoginPage() {
           <form onSubmit={mode === "register" ? handleSignUp : handlePasswordLogin} className="space-y-6">
             {mode === "register" && (
               <>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold uppercase text-neutral-500 font-mono tracking-widest">Nome</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="John"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-sm text-neutral-900 focus:border-black focus:ring-1 focus:ring-black outline-none transition-all"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold uppercase text-neutral-500 font-mono tracking-widest">Cognome</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Doe"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-sm text-neutral-900 focus:border-black focus:ring-1 focus:ring-black outline-none transition-all"
+                    />
+                  </div>
+                </div>
+
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase text-neutral-500 font-mono tracking-widest">Full Name</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="John Doe"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-sm text-neutral-900 focus:border-black focus:ring-1 focus:ring-black outline-none transition-all"
-                  />
+                  <label className="text-[10px] font-bold uppercase text-neutral-500 font-mono tracking-widest">Chi sei?</label>
+                  <select
+                    value={role}
+                    onChange={(e) => setRole(e.target.value as any)}
+                    className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-sm text-neutral-900 focus:border-black focus:ring-1 focus:ring-black outline-none transition-all appearance-none"
+                  >
+                    <option value="disabile">Cerco assistenza (Disabile/Famiglia)</option>
+                    <option value="badante">Offro assistenza (Caregiver)</option>
+                  </select>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-[10px] font-bold uppercase text-neutral-500 font-mono tracking-widest">Regione</label>
+                    <label className="text-[10px] font-bold uppercase text-neutral-500 font-mono tracking-widest">Città</label>
                     <input
                       type="text"
                       required
-                      placeholder="Lazio"
-                      value={region}
-                      onChange={(e) => setRegion(e.target.value)}
+                      placeholder="Roma"
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
                       className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-sm text-neutral-900 focus:border-black focus:ring-1 focus:ring-black outline-none transition-all"
                     />
                   </div>
@@ -135,7 +164,7 @@ export default function LoginPage() {
                     <input
                       type="text"
                       required
-                      placeholder="Roma"
+                      placeholder="RM"
                       value={province}
                       onChange={(e) => setProvince(e.target.value)}
                       className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-sm text-neutral-900 focus:border-black focus:ring-1 focus:ring-black outline-none transition-all"
