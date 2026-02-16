@@ -19,22 +19,16 @@ language plpgsql
 security definer set search_path = public
 as $$
 declare
-  v_role user_role;
-  v_status onboarding_status_enum := 'started';
+  default_role user_role;
 begin
   -- Estrazione ruolo dai metadati o default
-  v_role := coalesce((new.raw_user_meta_data->>'role')::user_role, 'disabile'::user_role);
-
-  -- Se il ruolo è stato fornito esplicitamente, lo step della scelta ruolo è completato
-  if (new.raw_user_meta_data->>'role') is not null then
-    v_status := 'role_done';
-  end if;
+  default_role := coalesce((new.raw_user_meta_data->>'role')::user_role, 'disabile'::user_role);
 
   -- 1. Crea record in public.users
   insert into public.users (id, email, role, status)
-  values (new.id, new.email, v_role, 'active');
+  values (new.id, new.email, default_role, 'active');
 
-  -- 2. Crea record in public.profiles
+  -- 2. Crea record in public.profiles (con onboarding_status 'started')
   insert into public.profiles (user_id, nome, cognome, citta, provincia, onboarding_status)
   values (
     new.id, 
@@ -42,7 +36,7 @@ begin
     new.raw_user_meta_data->>'last_name',
     new.raw_user_meta_data->>'citta',
     new.raw_user_meta_data->>'provincia',
-    v_status
+    'started'
   );
 
   return new;

@@ -6,7 +6,7 @@ import { supabaseBrowserClient } from "@/lib/supabaseClient";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 
 type OnboardingStatus = "started" | "role_done" | "profile_base_done" | "completed";
-type Role = "disabile" | "badante" | null;
+type Role = "disabile" | "badante" | "associazione" | null;
 
 export default function OnboardingPage() {
     const router = useRouter();
@@ -31,6 +31,11 @@ export default function OnboardingPage() {
     const [experienceYears, setExperienceYears] = useState(0);
     const [skills, setSkills] = useState("");
     const [availability, setAvailability] = useState("");
+
+    // Role specific states - Associazione (V2)
+    const [entityName, setEntityName] = useState("");
+    const [entityType, setEntityType] = useState<"association" | "municipality" | "fish_node" | "other">("association");
+    const [territoryFocus, setTerritoryFocus] = useState("");
 
     const [saving, setSaving] = useState(false);
 
@@ -59,16 +64,8 @@ export default function OnboardingPage() {
                 .maybeSingle();
 
             if (profile) {
-                let initialStatus = profile.onboarding_status || "started";
-                const userRole = userRecord?.role as Role;
-
-                // Se il ruolo è già stato scelto (es. in registrazione) ma lo status è 'started', avanziamo
-                if (initialStatus === "started" && userRole) {
-                    initialStatus = "role_done";
-                }
-
-                setStatus(initialStatus);
-                setRole(userRole);
+                setStatus(profile.onboarding_status || "started");
+                setRole(userRecord?.role as Role);
                 setFirstName(profile.nome || "");
                 setLastName(profile.cognome || "");
                 setCity(profile.citta || "");
@@ -92,10 +89,13 @@ export default function OnboardingPage() {
         setStatus(nextStatus);
     }
 
-    async function handleRoleSelection(selectedRole: "disabile" | "badante") {
+    async function handleRoleSelection(selectedRole: Role) {
+        if (!selectedRole) return;
         setSaving(true);
         const supabase = supabaseBrowserClient();
-        await supabase.from("users").update({ role: selectedRole }).eq("id", userId);
+        // Mappatura ruoli UI -> Database
+        const dbRole = selectedRole === "associazione" ? "association" : (selectedRole === "disabile" ? "disabled" : "caregiver");
+        await supabase.from("profiles").update({ role: dbRole }).eq("user_id", userId);
         setRole(selectedRole);
         await updateStatus("role_done");
         setSaving(false);
@@ -132,12 +132,19 @@ export default function OnboardingPage() {
                 livello_autonomia: autonomyLevel,
                 necessita_assistenza: assistanceNeeds
             });
-        } else if (role === "badante") {
             await supabase.from("badanti").upsert({
                 profile_id: profile.id,
                 anni_esperienza: experienceYears,
                 competenze: skills.split(",").map(s => s.trim()),
                 bio: availability
+            });
+        } else if (role === "associazione") {
+            await supabase.from("entities").upsert({
+                user_id: userId,
+                name: entityName,
+                entity_type: entityType,
+                territory_focus: territoryFocus,
+                description: description
             });
         }
 
@@ -184,11 +191,11 @@ export default function OnboardingPage() {
                 {status === "started" && (
                     <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
                         <div className="text-center mb-10">
-                            <h1 className="text-4xl font-black tracking-tighter text-black mb-4">Chi <span className="text-neutral-400 italic serif">sei?</span></h1>
+                            <h1 className="text-4xl font-black tracking-tighter text-black mb-4">Come vuoi usare <span className="text-neutral-400 italic serif">CareMatch?</span></h1>
                             <p className="text-sm text-neutral-500">Seleziona la tua modalità di accesso per iniziare.</p>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <button
                                 onClick={() => handleRoleSelection("disabile")}
                                 disabled={saving}
@@ -210,6 +217,18 @@ export default function OnboardingPage() {
                                     <div className="text-3xl mb-4 grayscale group-hover:grayscale-0 transition-all">👩‍⚕️</div>
                                     <h3 className="text-xs font-black uppercase tracking-widest text-neutral-400 group-hover:text-black mt-2">OFFRO ASSISTENZA</h3>
                                     <p className="text-[10px] text-neutral-400 mt-2 font-mono uppercase leading-relaxed">Sono un professionista della cura e del benessere.</p>
+                                </SpotlightCard>
+                            </button>
+
+                            <button
+                                onClick={() => handleRoleSelection("associazione")}
+                                disabled={saving}
+                                className="group text-left"
+                            >
+                                <SpotlightCard className="p-8 border-neutral-200 hover:border-black transition-all h-full">
+                                    <div className="text-3xl mb-4 grayscale group-hover:grayscale-0 transition-all">🏛️</div>
+                                    <h3 className="text-xs font-black uppercase tracking-widest text-neutral-400 group-hover:text-black mt-2">RAPPRESENTANZA</h3>
+                                    <p className="text-[10px] text-neutral-400 mt-2 font-mono uppercase leading-relaxed">Associazioni, Enti e coordinamento territoriale.</p>
                                 </SpotlightCard>
                             </button>
                         </div>
@@ -340,6 +359,36 @@ export default function OnboardingPage() {
                                             <textarea
                                                 rows={4} required value={availability} onChange={e => setAvailability(e.target.value)}
                                                 placeholder="Descrivi la tua disponibilità oraria e il tuo approccio professionale..." className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:border-black transition-all outline-none resize-none"
+                                            />
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-bold uppercase text-neutral-500 font-mono tracking-widest">Nome Organizzazione / Ente</label>
+                                            <input
+                                                type="text" required value={entityName} onChange={e => setEntityName(e.target.value)}
+                                                placeholder="Es. FISH Regionale, Consulta Handicap Comune X..." className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:border-black transition-all outline-none"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-bold uppercase text-neutral-500 font-mono tracking-widest">Tipo di Ente</label>
+                                            <select
+                                                value={entityType} onChange={e => setEntityType(e.target.value as any)}
+                                                className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:border-black transition-all outline-none appearance-none"
+                                            >
+                                                <option value="association">Associazione di Categoria</option>
+                                                <option value="municipality">Comune / Ente Pubblico</option>
+                                                <option value="fish_node">Nodo FISH / FAND</option>
+                                                <option value="foundation">Fondazione / Terzo Settore</option>
+                                                <option value="other">Altro</option>
+                                            </select>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-bold uppercase text-neutral-500 font-mono tracking-widest">Ambito Territoriale di Riferimento</label>
+                                            <input
+                                                type="text" required value={territoryFocus} onChange={e => setTerritoryFocus(e.target.value)}
+                                                placeholder="Es. Lombardia, Provincia di Verona, Comune di Milano..." className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:border-black transition-all outline-none"
                                             />
                                         </div>
                                     </>

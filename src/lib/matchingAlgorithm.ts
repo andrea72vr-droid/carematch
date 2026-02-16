@@ -71,6 +71,7 @@ export interface DisabledProfile {
         fascia_eta: string;
         condizioni: string[];
         autonomia: string;
+        provincia?: string; // Aggiunto per filtro territoriale
     };
     // Step 2: Needs
     raw_bisogni_assistenziali: {
@@ -105,6 +106,29 @@ export interface DisabledProfile {
         esperienza_caregiver: string;
         competenze: string[];
     };
+}
+
+export interface Organizzazione {
+    id: string;
+    profile_id: string;
+    tipo_ente: 'FISH' | 'Consulta' | 'Associazione Categoria' | 'ETS';
+    denominazione: string;
+    territorio_competenza: string;
+    sito_web?: string;
+    validato_da?: string;
+}
+
+export interface BisognoEspresso {
+    id: string;
+    utente_id: string;
+    titolo: string;
+    descrizione_semantica?: string;
+    categoria: 'assistenza' | 'trasporto' | 'scuola' | 'burocrazia' | 'altro';
+    stato_validazione: 'in_attesa' | 'validato' | 'preso_in_carico';
+    validato_da_id?: string;
+    is_pubblico: boolean;
+    metadata: any;
+    created_at: string;
 }
 
 export function calculateMatch(

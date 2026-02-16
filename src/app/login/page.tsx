@@ -2,23 +2,18 @@
 
 import { FormEvent, useState } from "react";
 import { supabaseBrowserClient } from "@/lib/supabaseClient";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Suspense } from "react";
 
 type AuthMode = "magic" | "login" | "register";
 
-function LoginContent() {
+export default function LoginPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const initialMode = (searchParams.get("mode") as AuthMode) || "login";
-
-  const [mode, setMode] = useState<AuthMode>(initialMode);
+  const [mode, setMode] = useState<AuthMode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [selectedRole, setSelectedRole] = useState<"disabile" | "badante">("disabile");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
@@ -58,8 +53,7 @@ function LoginContent() {
         options: {
           data: {
             first_name: firstName,
-            last_name: lastName,
-            role: selectedRole
+            last_name: lastName
           }
         }
       });
@@ -110,28 +104,6 @@ function LoginContent() {
           <form onSubmit={mode === "register" ? handleSignUp : handlePasswordLogin} className="space-y-6">
             {mode === "register" && (
               <>
-                <div className="space-y-4 mb-8 p-4 bg-neutral-50 rounded-xl border border-neutral-100">
-                  <label className="text-[10px] font-bold uppercase text-neutral-500 font-mono tracking-widest block mb-4">Chi sei?</label>
-                  <div className="grid grid-cols-2 gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setSelectedRole("disabile")}
-                      className={`py-6 px-4 rounded-xl border-2 transition-all flex flex-col items-center gap-2 ${selectedRole === "disabile" ? "border-black bg-white shadow-md shadow-black/5" : "border-transparent bg-neutral-100 grayscale hover:grayscale-0"}`}
-                    >
-                      <span className="text-2xl">👵</span>
-                      <span className="text-[9px] font-black uppercase tracking-widest">Assistito</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setSelectedRole("badante")}
-                      className={`py-6 px-4 rounded-xl border-2 transition-all flex flex-col items-center gap-2 ${selectedRole === "badante" ? "border-black bg-white shadow-md shadow-black/5" : "border-transparent bg-neutral-100 grayscale hover:grayscale-0"}`}
-                    >
-                      <span className="text-2xl">👩‍⚕️</span>
-                      <span className="text-[9px] font-black uppercase tracking-widest">Caregiver</span>
-                    </button>
-                  </div>
-                </div>
-
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="text-[10px] font-bold uppercase text-neutral-500 font-mono tracking-widest">Nome</label>
@@ -283,17 +255,5 @@ function LoginContent() {
         </div>
       </div>
     </main >
-  );
-}
-
-export default function LoginPage() {
-  return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="w-6 h-6 border-2 border-black border-t-transparent rounded-full animate-spin" />
-      </div>
-    }>
-      <LoginContent />
-    </Suspense>
   );
 }

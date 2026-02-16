@@ -4,7 +4,7 @@ create extension if not exists "vector";
 -- Tabella profili base (un record per utente Supabase)
 create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
-  role text check (role in ('disabled', 'caregiver', 'supervisor')) not null,
+  role text check (role in ('disabled', 'caregiver', 'supervisor', 'association', 'territorial_entity')) not null,
   full_name text,
   region text,
   province text,
@@ -115,6 +115,37 @@ create table if not exists public.match_feedbacks (
 create index if not exists match_feedbacks_match_id_idx
   on public.match_feedbacks (match_id);
 
+-- Tabella Entità e Associazioni (V2)
+create table if not exists public.entities (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references public.profiles(id) on delete cascade,
+  name text not null,
+  entity_type text check (entity_type in ('association', 'municipality', 'fish_node', 'foundation', 'other')) not null,
+  territory_focus text, -- Regione, Provincia o Comune
+  description text,
+  website text,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+create index if not exists entities_user_id_idx on public.entities (user_id);
+
+-- Tabella Bisogni Territoriali (V2)
+create table if not exists public.territorial_needs (
+  id uuid primary key default gen_random_uuid(),
+  entity_id uuid not null references public.entities(id) on delete cascade,
+  title text not null,
+  raw_description text not null,
+  category text, -- Es: 'Disabilità Motoria', 'Anziani', 'Socializzazione'
+  priority_level text check (priority_level in ('low', 'medium', 'high', 'critical')),
+  ai_analysis jsonb, -- Risultati analisi Gemini (punti chiave, suggerimenti)
+  status text check (status in ('active', 'addressed', 'archived')) default 'active',
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+create index if not exists territorial_needs_entity_id_idx on public.territorial_needs (entity_id);
+
 -- Row Level Security (RLS) di base
 alter table public.profiles enable row level security;
 alter table public.disabled_profiles enable row level security;
@@ -173,4 +204,27 @@ create policy "Users can manage own feedbacks"
   on public.match_feedbacks
   for all
   using (auth.uid() = given_by_user_id);
+
+-- Politiche per Entità (V2)
+alter table public.entities enable row level security;
+create policy "Entities can manage their own record"
+  on public.entities
+  for all
+  using (auth.uid() = user_id);
+
+-- Politiche per Bisogni Territoriali (V2)
+alter table public.territorial_needs enable row level security;
+create policy "Entities can manage their own needs"
+  on public.territorial_needs
+  for all
+  using (
+    auth.uid() in (
+      select user_id from public.entities where id = entity_id
+    )
+  );
+
+create policy "All authenticated users can view needs for collaboration"
+  on public.territorial_needs
+  for select
+  using (auth.role() = 'authenticated');
 

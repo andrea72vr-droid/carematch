@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { supabaseBrowserClient } from "@/lib/supabaseClient";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 
-type Role = "disabled" | "caregiver" | "supervisor" | null;
+type Role = "disabled" | "caregiver" | "supervisor" | "associazione" | null;
 
 export default function DashboardRouter() {
   const router = useRouter();
@@ -19,7 +19,12 @@ export default function DashboardRouter() {
       if (isDemo) {
         const demoRoleMatch = document.cookie.match(/demo_role=([^;]+)/);
         const demoRole = (demoRoleMatch ? demoRoleMatch[1] : "supervisor") as Role;
-        const target = demoRole === "supervisor" ? "admin" : demoRole;
+
+        let target = "admin";
+        if (demoRole === "disabled") target = "disabled";
+        else if (demoRole === "caregiver") target = "caregiver";
+        else if (demoRole === "associazione") target = "associazione";
+
         setRole(demoRole);
         router.push(`/dashboard/${target}`);
         return;
@@ -42,7 +47,11 @@ export default function DashboardRouter() {
 
       if (profile?.role) {
         const r = profile.role as Role;
-        const target = r === "supervisor" ? "admin" : r;
+        let target = "admin";
+        if (r === "disabled") target = "disabled";
+        else if (r === "caregiver") target = "caregiver";
+        else if (r === "associazione") target = "associazione";
+
         router.push(`/dashboard/${target}`);
       } else {
         setLoading(false);
@@ -66,7 +75,11 @@ export default function DashboardRouter() {
           );
         }
       }
-      const target = nextRole === "supervisor" ? "admin" : nextRole;
+      let target = "admin";
+      if (nextRole === "disabled") target = "disabled";
+      else if (nextRole === "caregiver") target = "caregiver";
+      else if (nextRole === "associazione") target = "associazione";
+
       router.push(`/dashboard/${target}`);
     } catch (err) {
       console.error(err);
@@ -95,11 +108,12 @@ export default function DashboardRouter() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             { id: "disabled", title: "Assistito", desc: "Cerco assistenza per me o un caro.", icon: "👵" },
             { id: "caregiver", title: "Badante", desc: "Offro competenze e professionalità.", icon: "🩺" },
-            { id: "supervisor", title: "Amministratore", desc: "Gestione e monitoraggio sistema.", icon: "🗝️" },
+            { id: "associazione", title: "Associazione", desc: "Rappresentanza e coordinamento bisogni.", icon: "🤝" },
+            { id: "supervisor", title: "Admin", desc: "Gestione e monitoraggio sistema.", icon: "🗝️" },
           ].map((r) => (
             <button
               key={r.id}
