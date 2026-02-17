@@ -336,7 +336,7 @@ export default function OnboardingPage() {
                                             />
                                         </div>
                                     </>
-                                ) : (
+                                ) : role === "badante" ? (
                                     <>
                                         <div className="grid grid-cols-2 gap-6">
                                             <div className="space-y-2">
