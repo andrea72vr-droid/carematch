@@ -175,7 +175,7 @@ export default function LoginPage() {
               type="button"
               onClick={() => {
                 document.cookie = "demo_mode=true; path=/";
-                document.cookie = "demo_role=supervisor; path=/";
+                document.cookie = "demo_role=admin; path=/";
                 router.push("/dashboard");
               }}
               className="w-full py-3 text-[10px] font-bold text-amber-600 border border-amber-200 rounded-full hover:bg-amber-50 transition-all uppercase tracking-widest"
@@ -186,7 +186,7 @@ export default function LoginPage() {
               type="button"
               onClick={() => {
                 document.cookie = "demo_mode=true; path=/";
-                document.cookie = "demo_role=disabled; path=/";
+                document.cookie = "demo_role=disabile; path=/";
                 router.push("/dashboard");
               }}
               className="w-full py-3 text-[10px] font-bold text-neutral-500 border border-neutral-200 rounded-full hover:bg-neutral-50 transition-all uppercase tracking-widest"
@@ -197,12 +197,23 @@ export default function LoginPage() {
               type="button"
               onClick={() => {
                 document.cookie = "demo_mode=true; path=/";
-                document.cookie = "demo_role=caregiver; path=/";
+                document.cookie = "demo_role=badante; path=/";
                 router.push("/dashboard");
               }}
               className="w-full py-3 text-[10px] font-bold text-neutral-500 border border-neutral-200 rounded-full hover:bg-neutral-50 transition-all uppercase tracking-widest"
             >
               Demo Badante/Caregiver
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                document.cookie = "demo_mode=true; path=/";
+                document.cookie = "demo_role=associazione; path=/";
+                router.push("/dashboard");
+              }}
+              className="w-full py-3 text-[10px] font-bold text-blue-600 border border-blue-200 rounded-full bg-blue-50/50 hover:bg-blue-50 transition-all uppercase tracking-widest"
+            >
+              Demo Associazione/Enti
             </button>
           </div>
 
@@ -220,7 +231,7 @@ export default function LoginPage() {
                     <button
                       onClick={() => {
                         document.cookie = "demo_mode=true; path=/";
-                        document.cookie = "demo_role=supervisor; path=/";
+                        document.cookie = "demo_role=admin; path=/";
                         window.location.href = "/dashboard";
                       }}
                       className="w-full py-2 bg-amber-200 text-amber-900 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-amber-300 transition-all shadow-sm"

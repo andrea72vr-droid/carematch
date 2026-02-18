@@ -93,9 +93,8 @@ export default function OnboardingPage() {
         if (!selectedRole) return;
         setSaving(true);
         const supabase = supabaseBrowserClient();
-        // Mappatura ruoli UI -> Database
-        const dbRole = selectedRole === "associazione" ? "association" : (selectedRole === "disabile" ? "disabled" : "caregiver");
-        await supabase.from("profiles").update({ role: dbRole }).eq("user_id", userId);
+        // Mappatura ruoli UI -> Database coerente con enum public.user_role
+        await supabase.from("profiles").update({ role: selectedRole }).eq("user_id", userId);
         setRole(selectedRole);
         await updateStatus("role_done");
         setSaving(false);

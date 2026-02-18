@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { supabaseBrowserClient } from "@/lib/supabaseClient";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 
-type Role = "disabled" | "caregiver" | "supervisor" | "associazione" | null;
+type Role = "disabile" | "badante" | "admin" | "associazione" | null;
 
 export default function DashboardRouter() {
   const router = useRouter();
@@ -18,11 +18,11 @@ export default function DashboardRouter() {
       const isDemo = document.cookie.includes("demo_mode=true");
       if (isDemo) {
         const demoRoleMatch = document.cookie.match(/demo_role=([^;]+)/);
-        const demoRole = (demoRoleMatch ? demoRoleMatch[1] : "supervisor") as Role;
+        const demoRole = (demoRoleMatch ? demoRoleMatch[1] : "admin") as Role;
 
         let target = "admin";
-        if (demoRole === "disabled") target = "disabled";
-        else if (demoRole === "caregiver") target = "caregiver";
+        if (demoRole === "disabile") target = "disabled";
+        else if (demoRole === "badante") target = "caregiver";
         else if (demoRole === "associazione") target = "associazione";
 
         setRole(demoRole);
@@ -48,8 +48,8 @@ export default function DashboardRouter() {
       if (profile?.role) {
         const r = profile.role as Role;
         let target = "admin";
-        if (r === "disabled") target = "disabled";
-        else if (r === "caregiver") target = "caregiver";
+        if (r === "disabile") target = "disabled";
+        else if (r === "badante") target = "caregiver";
         else if (r === "associazione") target = "associazione";
 
         router.push(`/dashboard/${target}`);
@@ -76,8 +76,8 @@ export default function DashboardRouter() {
         }
       }
       let target = "admin";
-      if (nextRole === "disabled") target = "disabled";
-      else if (nextRole === "caregiver") target = "caregiver";
+      if (nextRole === "disabile") target = "disabled";
+      else if (nextRole === "badante") target = "caregiver";
       else if (nextRole === "associazione") target = "associazione";
 
       router.push(`/dashboard/${target}`);
@@ -110,10 +110,10 @@ export default function DashboardRouter() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
-            { id: "disabled", title: "Assistito", desc: "Cerco assistenza per me o un caro.", icon: "👵" },
-            { id: "caregiver", title: "Badante", desc: "Offro competenze e professionalità.", icon: "🩺" },
+            { id: "disabile", title: "Assistito", desc: "Cerco assistenza per me o un caro.", icon: "👵" },
+            { id: "badante", title: "Badante", desc: "Offro competenze e professionalità.", icon: "🩺" },
             { id: "associazione", title: "Associazione", desc: "Rappresentanza e coordinamento bisogni.", icon: "🤝" },
-            { id: "supervisor", title: "Admin", desc: "Gestione e monitoraggio sistema.", icon: "🗝️" },
+            { id: "admin", title: "Admin", desc: "Gestione e monitoraggio sistema.", icon: "🗝️" },
           ].map((r) => (
             <button
               key={r.id}
