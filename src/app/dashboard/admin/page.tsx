@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { supabaseBrowserClient } from "@/lib/supabaseClient";
+import { EcosystemHeatmap } from "@/components/dashboard/EcosystemHeatmap";
 
 export default function AdminDashboard() {
     const [stats, setStats] = useState({
@@ -80,6 +81,28 @@ export default function AdminDashboard() {
                     </SpotlightCard>
                 ))}
             </div>
+
+            {/* Ecosystem Visualization Section */}
+            <section className="animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-300">
+                <div className="flex justify-between items-end mb-8">
+                    <div>
+                        <h3 className="text-xs font-black uppercase tracking-widest text-neutral-400">Distribuzione Territoriale</h3>
+                        <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-tight mt-1">Saturazione ecosistemica e cluster di bisogno</p>
+                    </div>
+                    <button className="px-6 py-2 bg-neutral-100 text-[10px] font-bold uppercase tracking-widest rounded-full hover:bg-black hover:text-white transition-all">
+                        Espandi Analisi
+                    </button>
+                </div>
+                <EcosystemHeatmap
+                    points={[
+                        { id: '1', x: 25, y: 30, intensity: 0.9, label: 'Cluster Verona Sud', category: 'Trasporto' },
+                        { id: '2', x: 65, y: 45, intensity: 0.6, label: 'Area Legnago', category: 'Assistenza' },
+                        { id: '3', x: 45, y: 75, intensity: 0.8, label: 'Nodo Villafranca', category: 'Burocrazia' },
+                        { id: '4', x: 15, y: 60, intensity: 0.4, label: 'Garda Est', category: 'Scuola' },
+                        { id: '5', x: 80, y: 20, intensity: 0.3, label: 'Valpolicella', category: 'Altro' },
+                    ]}
+                />
+            </section>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* User Activity Mockup */}

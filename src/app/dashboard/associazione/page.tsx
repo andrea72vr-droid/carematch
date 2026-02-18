@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { supabaseBrowserClient } from "@/lib/supabaseClient";
+import { EcosystemHeatmap } from "@/components/dashboard/EcosystemHeatmap";
 
 interface Bisogno {
     id: string;
@@ -16,6 +18,7 @@ interface Bisogno {
 }
 
 export default function AssociazioneDashboard() {
+    const router = useRouter();
     const [bisogni, setBisogni] = useState<Bisogno[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedBisogno, setSelectedBisogno] = useState<Bisogno | null>(null);
@@ -59,14 +62,20 @@ export default function AssociazioneDashboard() {
 
     return (
         <div className="p-8 lg:p-12 space-y-12 max-w-7xl mx-auto min-h-screen">
-            <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-                <div>
+            <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-10">
+                <div className="flex-1">
                     <span className="px-2 py-0.5 text-[10px] font-bold tracking-widest uppercase bg-blue-600 text-white rounded-full">Ecosistema Territoriale</span>
                     <h1 className="text-5xl font-black text-black mt-4 tracking-tighter">Nodo di <span className="text-blue-600 italic font-serif">Rappresentanza.</span></h1>
-                    <p className="text-sm text-neutral-500 mt-4 max-w-xl">
-                        Monitoraggio dei bisogni di cura espressi dalla comunità e coordinamento delle risposte territoriali.
+                    <p className="text-sm text-neutral-500 mt-4 max-w-xl leading-relaxed">
+                        Monitoraggio dei bisogni di cura espressi dalla comunità e coordinamento delle risposte territoriali per finalità istituzionali.
                     </p>
                 </div>
+                <button
+                    onClick={() => router.push("/dashboard/associazione/rappresentanza")}
+                    className="px-10 py-5 bg-black text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-blue-600 hover:shadow-2xl hover:shadow-blue-200 transition-all flex items-center gap-3"
+                >
+                    <span className="text-lg leading-none">+</span> Inserisci Bisogno Territoriale
+                </button>
             </header>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -88,6 +97,37 @@ export default function AssociazioneDashboard() {
                     <p className="text-[10px] text-neutral-400 mt-2 uppercase font-mono tracking-tighter font-bold">Mappatura storica</p>
                 </SpotlightCard>
             </div>
+
+            {/* Osservatorio Territoriale */}
+            <section className="animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-300">
+                <div className="flex justify-between items-end mb-8">
+                    <div>
+                        <h3 className="text-xs font-black uppercase tracking-widest text-neutral-400">Osservatorio Ecosistema</h3>
+                        <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-tight mt-1 italic">Analisi densità bisogni e saturazione servizi nel comprensorio</p>
+                    </div>
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
+                    <div className="lg:col-span-3">
+                        <EcosystemHeatmap
+                            points={[
+                                { id: 'a1', x: 30, y: 40, intensity: 0.8, label: 'Area Ovest - Mobilità', category: 'Trasporto' },
+                                { id: 'a2', x: 70, y: 25, intensity: 0.5, label: 'Centro - Supporto', category: 'Assistenza' },
+                                { id: 'a3', x: 50, y: 65, intensity: 0.7, label: 'Periferia - Barriere', category: 'Infrastruttura' },
+                            ]}
+                        />
+                    </div>
+                    <div className="space-y-6">
+                        <SpotlightCard className="p-6 border-blue-100 bg-blue-50/30">
+                            <span className="text-[8px] font-black text-blue-400 uppercase tracking-widest">Stakeholder Alert</span>
+                            <h4 className="text-[11px] font-black mt-2 uppercase">Picco in Area Ovest</h4>
+                            <p className="text-[10px] text-blue-800/70 mt-2 leading-relaxed">Rilevate 12 nuove segnalazioni di trasporto negato nelle ultime 48h. Necessaria interlocuzione AUSL.</p>
+                        </SpotlightCard>
+                        <button className="w-full py-4 bg-black text-white text-[9px] font-black uppercase tracking-widest rounded-xl hover:bg-blue-600 transition-all shadow-xl shadow-blue-900/10">
+                            Genera Report Istituzionale
+                        </button>
+                    </div>
+                </div>
+            </section>
 
             <section className="space-y-6">
                 <div className="flex justify-between items-center px-2">
@@ -158,6 +198,28 @@ export default function AssociazioneDashboard() {
                                     "{selectedBisogno.descrizione_semantica}"
                                 </p>
                             </div>
+
+                            {selectedBisogno.metadata && selectedBisogno.metadata.source === 'associazione_rappresentanza' && (
+                                <div className="grid grid-cols-2 gap-4 animate-in fade-in slide-in-from-left-2 duration-500">
+                                    <div className="p-4 bg-neutral-900 rounded-2xl">
+                                        <span className="text-[8px] font-black text-neutral-500 uppercase tracking-widest">Ambito Territoriale</span>
+                                        <p className="text-xs text-white font-bold mt-1 uppercase">{selectedBisogno.metadata.territorio}</p>
+                                    </div>
+                                    <div className="p-4 bg-neutral-900 rounded-2xl">
+                                        <span className="text-[8px] font-black text-neutral-500 uppercase tracking-widest">Livello Urgenza</span>
+                                        <p className={`text-xs font-black mt-1 uppercase ${selectedBisogno.metadata.livello_urgenza === 'critico' ? 'text-red-500' : 'text-blue-400'
+                                            }`}>{selectedBisogno.metadata.livello_urgenza}</p>
+                                    </div>
+                                    <div className="p-4 bg-neutral-50 rounded-2xl border border-neutral-100">
+                                        <span className="text-[8px] font-black text-neutral-400 uppercase tracking-widest">Target Utenti</span>
+                                        <p className="text-[10px] text-neutral-600 font-bold mt-1 uppercase">{selectedBisogno.metadata.target_utenti}</p>
+                                    </div>
+                                    <div className="p-4 bg-neutral-50 rounded-2xl border border-neutral-100">
+                                        <span className="text-[8px] font-black text-neutral-400 uppercase tracking-widest">Tipo Rappresentanza</span>
+                                        <p className="text-[10px] text-neutral-600 font-bold mt-1 uppercase">{selectedBisogno.metadata.livello_rappresentativo}</p>
+                                    </div>
+                                </div>
+                            )}
 
                             <div className="space-y-6 pt-4 border-t border-neutral-100">
                                 <div className="flex justify-between items-center">
