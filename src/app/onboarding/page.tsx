@@ -131,20 +131,28 @@ export default function OnboardingPage() {
                 livello_autonomia: autonomyLevel,
                 necessita_assistenza: assistanceNeeds
             });
+        } else if (role === "badante") {
             await supabase.from("badanti").upsert({
                 profile_id: profile.id,
-                anni_esperienza: experienceYears,
+                anni_esperienza: Math.round(parseFloat(experienceYears) || 0).toString(),
                 competenze: skills.split(",").map(s => s.trim()),
                 bio: availability
             });
         } else if (role === "associazione") {
-            await supabase.from("entities").upsert({
-                user_id: userId,
-                name: entityName,
-                entity_type: entityType,
-                territory_focus: territoryFocus,
-                description: description
-            });
+            const entTypeMap: Record<string, string> = {
+                "association": "Associazione Categoria",
+                "municipality": "Ente Pubblico",
+                "fish_node": "FISH",
+                "foundation": "ETS",
+                "other": "Altro"
+            };
+
+            await supabase.from("organizzazioni").upsert({
+                profile_id: profile.id,
+                denominazione: entityName,
+                tipo_ente: entTypeMap[entityType] || "Altro",
+                territorio_competenza: territoryFocus
+            }, { onConflict: "profile_id" });
         }
 
         await updateStatus("completed");

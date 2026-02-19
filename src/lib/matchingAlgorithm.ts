@@ -6,6 +6,7 @@ export interface MatchScore {
         relational: number;
         logistics: number;
         preferences: number;
+        trust: number;
     };
     harmonyPoints: string[];
     warnings: string[];
@@ -61,6 +62,8 @@ export interface CaregiverProfile {
     raw_valori_personali: {
         descrizione: string;
     };
+    certified?: boolean;
+    tipo_certificazione?: string;
 }
 
 export interface DisabledProfile {
@@ -139,6 +142,7 @@ export function calculateMatch(
     let relationalScore = 0;
     let logisticsScore = 0;
     let preferencesScore = 0;
+    let trustScore = 0;
 
     const harmonyPoints: string[] = [];
     const warnings: string[] = [];
@@ -338,14 +342,24 @@ export function calculateMatch(
 
     preferencesScore = Math.min(100, preferencesScore);
 
+    // --- 5. Trust Match (Ecosystem Certification) ---
+    if (caregiver.certified) {
+        trustScore = 100;
+        harmonyPoints.push("Professionista certificato dall'ecosistema territoriale");
+    } else {
+        trustScore = 0;
+        warnings.push("Profilo non ancora certificato dalle associazioni locali");
+    }
+
 
     // --- TOTAL CALCULATION ---
-    // Weights: 40% Tech, 30% Rel, 20% Log, 10% Pref
+    // Weights: 35% Tech, 20% Rel, 15% Log, 10% Pref, 20% Trust
     const totalScore = Math.round(
-        (technicalScore * 0.4) +
-        (relationalScore * 0.3) +
-        (logisticsScore * 0.2) +
-        (preferencesScore * 0.1)
+        (technicalScore * 0.35) +
+        (relationalScore * 0.20) +
+        (logisticsScore * 0.15) +
+        (preferencesScore * 0.10) +
+        (trustScore * 0.20)
     );
 
     return {
@@ -354,7 +368,8 @@ export function calculateMatch(
             technical: technicalScore,
             relational: relationalScore,
             logistics: logisticsScore,
-            preferences: preferencesScore
+            preferences: preferencesScore,
+            trust: trustScore
         },
         harmonyPoints: harmonyPoints.slice(0, 3), // Top 3
         warnings: warnings.slice(0, 3) // Top 3

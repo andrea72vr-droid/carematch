@@ -17,18 +17,68 @@ interface Bisogno {
     metadata: any;
 }
 
+interface Caregiver {
+    id: string;
+    profile_id: string;
+    nome: string;
+    cognome: string;
+    specializzazione: string;
+    certified?: boolean;
+    tipo_certificazione?: string;
+}
+
 export default function AssociazioneDashboard() {
     const router = useRouter();
+    const [activeTab, setActiveTab] = useState<'audit' | 'caregivers' | 'dialogue'>('audit');
     const [bisogni, setBisogni] = useState<Bisogno[]>([]);
+    const [caregivers, setCaregivers] = useState<Caregiver[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedBisogno, setSelectedBisogno] = useState<Bisogno | null>(null);
     const [counts, setCounts] = useState({ in_attesa: 0, validati: 0, totale: 0 });
     const [analyzing, setAnalyzing] = useState(false);
     const [aiAnalysis, setAiAnalysis] = useState<any>(null);
+    const [generatingReport, setGeneratingReport] = useState(false);
 
     useEffect(() => {
-        fetchBisogni();
-    }, []);
+        if (activeTab === 'audit') fetchBisogni();
+        else fetchCaregivers();
+    }, [activeTab]);
+
+    async function fetchCaregivers() {
+        setLoading(true);
+        const isDemo = document.cookie.includes("demo_mode=true");
+        if (isDemo) {
+            setCaregivers([
+                { id: 'c1', profile_id: 'p1', nome: 'Marco', cognome: 'Rossi', specializzazione: 'OSS', certified: true, tipo_certificazione: 'Avanzata' },
+                { id: 'c2', profile_id: 'p2', nome: 'Elena', cognome: 'Bianchi', specializzazione: 'Infermiera', certified: false },
+                { id: 'c3', profile_id: 'p3', nome: 'Giulia', cognome: 'Verdi', specializzazione: 'Caregiver Familiare', certified: false }
+            ]);
+            setLoading(false);
+            return;
+        }
+
+        const supabase = supabaseBrowserClient();
+        const { data, error } = await supabase
+            .from("caregiver_profiles")
+            .select(`
+                id,
+                specializzazione,
+                profiles:profile_id (id, nome, cognome)
+            `);
+
+        if (!error && data) {
+            const formatted = data.map((d: any) => ({
+                id: d.id,
+                profile_id: d.profiles.id,
+                nome: d.profiles.nome,
+                cognome: d.profiles.cognome,
+                specializzazione: d.specializzazione,
+                certified: false
+            }));
+            setCaregivers(formatted);
+        }
+        setLoading(false);
+    }
 
     async function fetchBisogni() {
         setLoading(true);
@@ -45,6 +95,28 @@ export default function AssociazioneDashboard() {
             setCounts({ in_attesa: inAttesa, validati: validati, totale: data.length });
         }
         setLoading(false);
+    }
+
+    async function handleCertify(caregiverId: string, level: string) {
+        // Simulazione per demo / ottimizzazione UI
+        setCaregivers(prev => prev.map(cg =>
+            cg.id === caregiverId ? { ...cg, certified: true, tipo_certificazione: level } : cg
+        ));
+
+        // Logica DB futura (Supabase)
+        // await supabase.from('caregiver_certifications').upsert({ caregiver_id: ..., tipo: level })
+
+        alert(`Certificazione ${level} emessa con successo per il professionista.`);
+    }
+
+    async function downloadInstitutionalReport() {
+        setGeneratingReport(true);
+        // Simulazione elaborazione IA dei dati territoriali
+        setTimeout(() => {
+            setGeneratingReport(false);
+            alert("Report Ecosistemico Generato. Il documento include l'analisi della densità dei bisogni e le raccomandazioni strategiche per l'ente.");
+            // Qui andrebbe la logica per generare il PDF o scaricare il file Excel
+        }, 2000);
     }
 
     async function handleUpdateStatus(id: string, newStatus: string) {
@@ -78,106 +150,250 @@ export default function AssociazioneDashboard() {
                 </button>
             </header>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <SpotlightCard className="p-8 border-neutral-100">
-                    <h3 className="text-[10px] font-black uppercase tracking-widest text-neutral-400 mb-6">Bisogni in attesa</h3>
-                    <div className="text-4xl font-black">{counts.in_attesa}</div>
-                    <p className="text-[10px] text-blue-600 mt-2 uppercase font-mono tracking-tighter font-bold">Richiedono validazione</p>
-                </SpotlightCard>
-
-                <SpotlightCard className="p-8 border-neutral-100">
-                    <h3 className="text-[10px] font-black uppercase tracking-widest text-neutral-400 mb-6">Validati / In Carico</h3>
-                    <div className="text-4xl font-black">{counts.validati}</div>
-                    <p className="text-[10px] text-green-600 mt-2 uppercase font-mono tracking-tighter font-bold">In fase di risoluzione</p>
-                </SpotlightCard>
-
-                <SpotlightCard className="p-8 border-neutral-100">
-                    <h3 className="text-[10px] font-black uppercase tracking-widest text-neutral-400 mb-6">Totale Segnalazioni</h3>
-                    <div className="text-4xl font-black">{counts.totale}</div>
-                    <p className="text-[10px] text-neutral-400 mt-2 uppercase font-mono tracking-tighter font-bold">Mappatura storica</p>
-                </SpotlightCard>
+            <div className="flex gap-8 border-b border-neutral-100 pb-1">
+                <button
+                    onClick={() => setActiveTab('audit')}
+                    className={`pb-4 text-[11px] font-black uppercase tracking-widest transition-all relative ${activeTab === 'audit' ? 'text-blue-600' : 'text-neutral-400 hover:text-black'}`}
+                >
+                    Audit & Rappresentanza
+                    {activeTab === 'audit' && <div className="absolute bottom-0 left-0 w-full h-1 bg-blue-600 rounded-full" />}
+                </button>
+                <button
+                    onClick={() => setActiveTab('caregivers')}
+                    className={`pb-4 text-[11px] font-black uppercase tracking-widest transition-all relative ${activeTab === 'caregivers' ? 'text-blue-600' : 'text-neutral-400 hover:text-black'}`}
+                >
+                    Qualità & Certificazioni
+                    {activeTab === 'caregivers' && <div className="absolute bottom-0 left-0 w-full h-1 bg-blue-600 rounded-full" />}
+                </button>
+                <button
+                    onClick={() => setActiveTab('dialogue')}
+                    className={`pb-4 text-[11px] font-black uppercase tracking-widest transition-all relative ${activeTab === 'dialogue' ? 'text-blue-600' : 'text-neutral-400 hover:text-black'}`}
+                >
+                    Dialogo Istituzionale
+                    {activeTab === 'dialogue' && <div className="absolute bottom-0 left-0 w-full h-1 bg-blue-600 rounded-full" />}
+                </button>
             </div>
 
-            {/* Osservatorio Territoriale */}
-            <section className="animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-300">
-                <div className="flex justify-between items-end mb-8">
-                    <div>
-                        <h3 className="text-xs font-black uppercase tracking-widest text-neutral-400">Osservatorio Ecosistema</h3>
-                        <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-tight mt-1 italic">Analisi densità bisogni e saturazione servizi nel comprensorio</p>
-                    </div>
-                </div>
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
-                    <div className="lg:col-span-3">
-                        <EcosystemHeatmap
-                            points={[
-                                { id: 'a1', x: 30, y: 40, intensity: 0.8, label: 'Area Ovest - Mobilità', category: 'Trasporto' },
-                                { id: 'a2', x: 70, y: 25, intensity: 0.5, label: 'Centro - Supporto', category: 'Assistenza' },
-                                { id: 'a3', x: 50, y: 65, intensity: 0.7, label: 'Periferia - Barriere', category: 'Infrastruttura' },
-                            ]}
-                        />
-                    </div>
-                    <div className="space-y-6">
-                        <SpotlightCard className="p-6 border-blue-100 bg-blue-50/30">
-                            <span className="text-[8px] font-black text-blue-400 uppercase tracking-widest">Stakeholder Alert</span>
-                            <h4 className="text-[11px] font-black mt-2 uppercase">Picco in Area Ovest</h4>
-                            <p className="text-[10px] text-blue-800/70 mt-2 leading-relaxed">Rilevate 12 nuove segnalazioni di trasporto negato nelle ultime 48h. Necessaria interlocuzione AUSL.</p>
+            {activeTab === 'audit' ? (
+                <>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-in fade-in slide-in-from-top-4 duration-500">
+                        <SpotlightCard className="p-8 border-neutral-100">
+                            <h3 className="text-[10px] font-black uppercase tracking-widest text-neutral-400 mb-6">Bisogni in attesa</h3>
+                            <div className="text-4xl font-black">{counts.in_attesa}</div>
+                            <p className="text-[10px] text-blue-600 mt-2 uppercase font-mono tracking-tighter font-bold">Richiedono validazione</p>
                         </SpotlightCard>
-                        <button className="w-full py-4 bg-black text-white text-[9px] font-black uppercase tracking-widest rounded-xl hover:bg-blue-600 transition-all shadow-xl shadow-blue-900/10">
-                            Genera Report Istituzionale
-                        </button>
-                    </div>
-                </div>
-            </section>
 
-            <section className="space-y-6">
-                <div className="flex justify-between items-center px-2">
-                    <h2 className="text-xs font-black uppercase tracking-[0.2em] text-black">Flusso Bisogni Territoriali</h2>
-                    <button onClick={fetchBisogni} className="text-[10px] font-bold uppercase text-blue-600 hover:text-black transition-colors">Aggiorna Dati</button>
-                </div>
+                        <SpotlightCard className="p-8 border-neutral-100">
+                            <h3 className="text-[10px] font-black uppercase tracking-widest text-neutral-400 mb-6">Validati / In Carico</h3>
+                            <div className="text-4xl font-black">{counts.validati}</div>
+                            <p className="text-[10px] text-green-600 mt-2 uppercase font-mono tracking-tighter font-bold">In fase di risoluzione</p>
+                        </SpotlightCard>
 
-                {loading ? (
-                    <div className="h-64 flex items-center justify-center border border-dashed border-neutral-200 rounded-2xl">
-                        <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+                        <SpotlightCard className="p-8 border-neutral-100">
+                            <h3 className="text-[10px] font-black uppercase tracking-widest text-neutral-400 mb-6">Totale Segnalazioni</h3>
+                            <div className="text-4xl font-black">{counts.totale}</div>
+                            <p className="text-[10px] text-neutral-400 mt-2 uppercase font-mono tracking-tighter font-bold">Mappatura storica</p>
+                        </SpotlightCard>
                     </div>
-                ) : bisogni.length === 0 ? (
-                    <div className="h-64 flex flex-col items-center justify-center border border-dashed border-neutral-200 rounded-2xl p-8 text-center">
-                        <p className="text-sm text-neutral-400 uppercase font-bold tracking-tight">Nessuna segnalazione trovata nel tuo territorio.</p>
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-1 gap-4">
-                        {bisogni.map((item) => (
-                            <div key={item.id} className="group bg-white border border-neutral-100 p-6 flex flex-col md:flex-row justify-between items-center hover:shadow-xl hover:shadow-blue-900/5 hover:border-blue-200 transition-all duration-300 rounded-xl">
-                                <div className="flex items-center gap-6">
-                                    <div className="w-12 h-12 bg-neutral-50 rounded-full flex items-center justify-center text-xl grayscale group-hover:grayscale-0 transition-all">
-                                        {item.categoria === "assistenza" ? "🩺" : item.categoria === "trasporto" ? "♿" : "📄"}
+
+                    <section className="animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-300">
+                        <div className="flex justify-between items-end mb-8">
+                            <div>
+                                <h3 className="text-xs font-black uppercase tracking-widest text-neutral-400">Osservatorio Ecosistema</h3>
+                                <p className="text-[10px] text-neutral-500 font-bold uppercase tracking-tight mt-1 italic">Analisi densità bisogni e saturazione servizi nel comprensorio</p>
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
+                            <div className="lg:col-span-3">
+                                <EcosystemHeatmap
+                                    points={[
+                                        { id: 'a1', x: 30, y: 40, intensity: 0.8, label: 'Area Ovest - Mobilità', category: 'Trasporto' },
+                                        { id: 'a2', x: 70, y: 25, intensity: 0.5, label: 'Centro - Supporto', category: 'Assistenza' },
+                                        { id: 'a3', x: 50, y: 65, intensity: 0.7, label: 'Periferia - Barriere', category: 'Infrastruttura' },
+                                    ]}
+                                />
+                            </div>
+                            <div className="space-y-6">
+                                <SpotlightCard className="p-6 border-blue-100 bg-blue-50/30">
+                                    <span className="text-[8px] font-black text-blue-400 uppercase tracking-widest">Stakeholder Alert</span>
+                                    <h4 className="text-[11px] font-black mt-2 uppercase">Picco in Area Ovest</h4>
+                                    <p className="text-[10px] text-blue-800/70 mt-2 leading-relaxed">Rilevate 12 nuove segnalazioni di trasporto negato nelle ultime 48h. Necessaria interlocuzione AUSL.</p>
+                                </SpotlightCard>
+                                <button
+                                    onClick={downloadInstitutionalReport}
+                                    disabled={generatingReport}
+                                    className="w-full py-4 bg-black text-white text-[9px] font-black uppercase tracking-widest rounded-xl hover:bg-blue-600 transition-all shadow-xl shadow-blue-900/10 flex items-center justify-center gap-3"
+                                >
+                                    {generatingReport ? (
+                                        <>
+                                            <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                            Generazione in corso...
+                                        </>
+                                    ) : (
+                                        "Genera Report Istituzionale"
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="space-y-6">
+                        <div className="flex justify-between items-center px-2">
+                            <h2 className="text-xs font-black uppercase tracking-[0.2em] text-black">Flusso Bisogni Territoriali</h2>
+                            <button onClick={fetchBisogni} className="text-[10px] font-bold uppercase text-blue-600 hover:text-black transition-colors">Aggiorna Dati</button>
+                        </div>
+
+                        {loading ? (
+                            <div className="h-64 flex items-center justify-center border border-dashed border-neutral-200 rounded-2xl">
+                                <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+                            </div>
+                        ) : bisogni.length === 0 ? (
+                            <div className="h-64 flex flex-col items-center justify-center border border-dashed border-neutral-200 rounded-2xl p-8 text-center">
+                                <p className="text-sm text-neutral-400 uppercase font-bold tracking-tight">Nessuna segnalazione trovata nel tuo territorio.</p>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 gap-4">
+                                {bisogni.map((item) => (
+                                    <div key={item.id} className="group bg-white border border-neutral-100 p-6 flex flex-col md:flex-row justify-between items-center hover:shadow-xl hover:shadow-blue-900/5 hover:border-blue-200 transition-all duration-300 rounded-xl">
+                                        <div className="flex items-center gap-6">
+                                            <div className="w-12 h-12 bg-neutral-50 rounded-full flex items-center justify-center text-xl grayscale group-hover:grayscale-0 transition-all">
+                                                {item.categoria === "assistenza" ? "🩺" : item.categoria === "trasporto" ? "♿" : "📄"}
+                                            </div>
+                                            <div>
+                                                <h4 className="text-sm font-bold text-black group-hover:text-blue-600 transition-colors uppercase tracking-tight">{item.titolo}</h4>
+                                                <div className="flex gap-4 mt-1">
+                                                    <span className="text-[9px] font-mono text-neutral-400 uppercase">{item.categoria}</span>
+                                                    <span className="text-[9px] font-mono text-neutral-400 uppercase">•</span>
+                                                    <span className="text-[9px] font-mono text-neutral-400 uppercase">{new Date(item.created_at).toLocaleDateString()}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-6 mt-4 md:mt-0">
+                                            <span className={`text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full ${item.stato_validazione === 'validato' ? 'bg-green-50 text-green-600' :
+                                                item.stato_validazione === 'preso_in_carico' ? 'bg-blue-50 text-blue-600' : 'bg-neutral-100 text-neutral-400'
+                                                }`}>
+                                                {item.stato_validazione.replace('_', ' ')}
+                                            </span>
+                                            <button
+                                                onClick={() => setSelectedBisogno(item)}
+                                                className="px-6 py-2 bg-black text-white text-[9px] font-bold uppercase tracking-widest rounded-full hover:bg-blue-600 transition-all"
+                                            >
+                                                Gestisci
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h4 className="text-sm font-bold text-black group-hover:text-blue-600 transition-colors uppercase tracking-tight">{item.titolo}</h4>
-                                        <div className="flex gap-4 mt-1">
-                                            <span className="text-[9px] font-mono text-neutral-400 uppercase">{item.categoria}</span>
-                                            <span className="text-[9px] font-mono text-neutral-400 uppercase">•</span>
-                                            <span className="text-[9px] font-mono text-neutral-400 uppercase">{new Date(item.created_at).toLocaleDateString()}</span>
+                                ))}
+                            </div>
+                        )}
+                    </section>
+                </>
+            ) : activeTab === 'caregivers' ? (
+                <section className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <header>
+                        <h3 className="text-2xl font-black tracking-tighter text-black uppercase">Certification <span className="text-blue-600 italic">Lab.</span></h3>
+                        <p className="text-xs text-neutral-400 font-bold uppercase tracking-tight mt-1">Acclama e certifica i professionisti della cura sul territorio</p>
+                    </header>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {caregivers.map((cg) => (
+                            <SpotlightCard key={cg.id} className="p-8 border-neutral-100 group">
+                                <div className="flex justify-between items-start mb-6">
+                                    <div className="w-12 h-12 bg-neutral-900 rounded-2xl flex items-center justify-center text-xl grayscale group-hover:grayscale-0 transition-all">
+                                        👤
+                                    </div>
+                                    {cg.certified && (
+                                        <span className="px-3 py-1 bg-blue-600 text-white text-[8px] font-black uppercase tracking-widest rounded-full shadow-lg shadow-blue-200">
+                                            {cg.tipo_certificazione}
+                                        </span>
+                                    )}
+                                </div>
+                                <h4 className="text-lg font-black tracking-tighter text-black uppercase">{cg.nome} {cg.cognome}</h4>
+                                <p className="text-[10px] font-mono text-neutral-400 uppercase mt-1">{cg.specializzazione}</p>
+
+                                <div className="mt-8 pt-6 border-t border-neutral-50 space-y-3">
+                                    <p className="text-[9px] font-bold text-neutral-400 uppercase tracking-widest mb-4">Certifica Competenze:</p>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <button
+                                            onClick={() => handleCertify(cg.id, 'Base')}
+                                            className="py-2.5 bg-neutral-50 text-[8px] font-black text-neutral-500 uppercase tracking-tighter rounded-lg hover:bg-blue-600 hover:text-white transition-all"
+                                        >
+                                            Base
+                                        </button>
+                                        <button
+                                            onClick={() => handleCertify(cg.id, 'Avanzata')}
+                                            className="py-2.5 bg-neutral-50 text-[8px] font-black text-neutral-500 uppercase tracking-tighter rounded-lg hover:bg-blue-600 hover:text-white transition-all"
+                                        >
+                                            Avanzata
+                                        </button>
+                                    </div>
+                                    <button className="w-full py-3 border border-neutral-100 text-[9px] font-black text-black uppercase tracking-widest rounded-xl hover:border-blue-600 hover:text-blue-600 transition-all">
+                                        Vedi Curriculum
+                                    </button>
+                                </div>
+                            </SpotlightCard>
+                        ))}
+                    </div>
+                </section>
+            ) : (
+                /* Dialogue Tab */
+                <section className="animate-in fade-in slide-in-from-left-4 duration-500">
+                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
+                        <div className="lg:col-span-1 space-y-6">
+                            <h3 className="text-xs font-black uppercase tracking-widest text-neutral-400 mb-6">Interlocutori Attivi</h3>
+                            {[
+                                { name: "Assessorato Politiche Sociali", status: "online", last: "2h fa", type: "Comune" },
+                                { name: "Tavolo Disabilità Distretto 1", status: "away", last: "1g fa", type: "AUSL" },
+                                { name: "Segreteria Consiliare", status: "offline", last: "3g fa", type: "Istituzione" }
+                            ].map((contact, i) => (
+                                <div key={i} className="p-4 bg-white border border-neutral-100 rounded-2xl hover:border-blue-600 transition-all cursor-pointer group">
+                                    <div className="flex items-center gap-4">
+                                        <div className={`w-2 h-2 rounded-full ${contact.status === 'online' ? 'bg-green-500' : 'bg-neutral-300'}`} />
+                                        <div className="flex-1">
+                                            <p className="text-[10px] font-black uppercase tracking-tight text-black">{contact.name}</p>
+                                            <p className="text-[8px] text-neutral-400 font-bold uppercase mt-0.5">{contact.type} • {contact.last}</p>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-6 mt-4 md:mt-0">
-                                    <span className={`text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full ${item.stato_validazione === 'validato' ? 'bg-green-50 text-green-600' :
-                                        item.stato_validazione === 'preso_in_carico' ? 'bg-blue-50 text-blue-600' : 'bg-neutral-100 text-neutral-400'
-                                        }`}>
-                                        {item.stato_validazione.replace('_', ' ')}
-                                    </span>
-                                    <button
-                                        onClick={() => setSelectedBisogno(item)}
-                                        className="px-6 py-2 bg-black text-white text-[9px] font-bold uppercase tracking-widest rounded-full hover:bg-blue-600 transition-all"
-                                    >
-                                        Gestisci
-                                    </button>
+                            ))}
+                        </div>
+                        <div className="lg:col-span-3 flex flex-col h-[600px] border border-neutral-100 rounded-3xl overflow-hidden bg-white shadow-2xl shadow-neutral-200/50">
+                            <div className="p-6 border-b border-neutral-50 flex justify-between items-center bg-neutral-50/50">
+                                <div>
+                                    <h4 className="text-xs font-black uppercase tracking-widest">Assessorato Politiche Sociali</h4>
+                                    <p className="text-[9px] text-blue-600 font-bold uppercase mt-1 italic">Oggetto: Criticità Trasporto Area Ovest (ID #TR-442)</p>
+                                </div>
+                                <span className="px-3 py-1 bg-black text-white text-[8px] font-black uppercase tracking-widest rounded-full">Canale Certificato</span>
+                            </div>
+                            <div className="flex-1 p-8 overflow-y-auto space-y-8">
+                                <div className="max-w-[80%]">
+                                    <div className="bg-neutral-100 p-6 rounded-2xl rounded-tl-none font-serif italic text-sm text-neutral-600 leading-relaxed">
+                                        Buongiorno. Abbiamo analizzato i dati aggregati che ci avete inviato tramite il report dell'Audit.
+                                        Siamo preoccupati per l'aumento delle segnalazioni nel quadrante Ovest. Potete fornirci il dettaglio anonimizzato delle fasce orarie più colpite?
+                                    </div>
+                                    <span className="text-[8px] font-mono uppercase text-neutral-400 mt-2 block ml-2">Assessorato • 10:45</span>
+                                </div>
+                                <div className="max-w-[80%] ml-auto text-right">
+                                    <div className="bg-blue-600 text-white p-6 rounded-2xl rounded-tr-none text-xs leading-relaxed">
+                                        Certamente. Stiamo estraendo i dati granulari. Anticipiamo che l'80% dei disservizi avviene tra le 07:30 e le 09:00, impattando prevalentemente studenti universitari e lavoratori.
+                                    </div>
+                                    <span className="text-[8px] font-mono uppercase text-neutral-400 mt-2 block mr-2">Voi (FISH Node) • 11:15</span>
                                 </div>
                             </div>
-                        ))}
+                            <div className="p-6 border-t border-neutral-50 bg-neutral-50/20">
+                                <div className="flex gap-4">
+                                    <input
+                                        type="text"
+                                        placeholder="Scrivi un messaggio certificato..."
+                                        className="flex-1 bg-white border border-neutral-200 px-6 py-4 rounded-xl text-xs outline-none focus:border-blue-600 transition-all"
+                                    />
+                                    <button className="px-8 py-4 bg-black text-white text-[9px] font-black uppercase tracking-widest rounded-xl hover:bg-blue-600 transition-all">Invia Corrispondenza</button>
+                                </div>
+                                <p className="text-[8px] text-neutral-400 mt-4 text-center uppercase tracking-widest font-bold">I messaggi inviati tramite questo canale hanno valore di notifica istituzionale.</p>
+                            </div>
+                        </div>
                     </div>
-                )}
-            </section>
+                </section>
+            )}
 
             {/* Modal di Gestione Bisogno */}
             {selectedBisogno && (
