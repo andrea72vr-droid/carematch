@@ -134,7 +134,7 @@ export default function OnboardingPage() {
         } else if (role === "badante") {
             await supabase.from("badanti").upsert({
                 profile_id: profile.id,
-                anni_esperienza: Math.round(parseFloat(experienceYears) || 0).toString(),
+                anni_esperienza: Math.round(Number(experienceYears) || 0),
                 competenze: skills.split(",").map(s => s.trim()),
                 bio: availability
             });
