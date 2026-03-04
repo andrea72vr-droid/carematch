@@ -38,31 +38,106 @@ export default function AssociazioneDashboard() {
     const [analyzing, setAnalyzing] = useState(false);
     const [aiAnalysis, setAiAnalysis] = useState<any>(null);
     const [generatingReport, setGeneratingReport] = useState(false);
+    const [dialogues, setDialogues] = useState<any[]>([]);
+    const [selectedDialogue, setSelectedDialogue] = useState<any>(null);
+    const [messages, setMessages] = useState<any[]>([]);
+    const [newMessage, setNewMessage] = useState("");
+    const [showNewDialogueModal, setShowNewDialogueModal] = useState(false);
+    const [newDialogueSubject, setNewDialogueSubject] = useState("");
+    const [newDialogueInterlocutor, setNewDialogueInterlocutor] = useState("Comune");
+    const [newDialogueInterlocutorName, setNewDialogueInterlocutorName] = useState("");
 
     useEffect(() => {
         if (activeTab === 'audit') fetchBisogni();
-        else fetchCaregivers();
+        else if (activeTab === 'caregivers') fetchCaregivers();
+        else fetchDialogues();
     }, [activeTab]);
+
+    async function fetchDialogues() {
+        setLoading(true);
+        const supabase = supabaseBrowserClient();
+        const { data, error } = await supabase
+            .from("institutional_dialogues")
+            .select("*")
+            .order("updated_at", { ascending: false });
+
+        if (!error && data) {
+            setDialogues(data);
+            if (data.length > 0) {
+                setSelectedDialogue(data[0]);
+                fetchMessages(data[0].id);
+            }
+        }
+        setLoading(false);
+    }
+
+    async function fetchMessages(dialogueId: string) {
+        const supabase = supabaseBrowserClient();
+        const { data, error } = await supabase
+            .from("institutional_messages")
+            .select("*")
+            .eq("dialogue_id", dialogueId)
+            .order("created_at", { ascending: true });
+
+        if (!error && data) {
+            setMessages(data);
+        }
+    }
+
+    async function handleSendMessage() {
+        if (!newMessage.trim() || !selectedDialogue) return;
+
+        const supabase = supabaseBrowserClient();
+        const { error } = await supabase
+            .from("institutional_messages")
+            .insert({
+                dialogue_id: selectedDialogue.id,
+                content: newMessage,
+                sender_type: 'association',
+                is_certified: true
+            });
+
+        if (!error) {
+            setNewMessage("");
+            fetchMessages(selectedDialogue.id);
+        }
+    }
+
+    async function handleCreateDialogue() {
+        if (!newDialogueSubject || !newDialogueInterlocutorName) return;
+
+        const supabase = supabaseBrowserClient();
+        const { data: userData } = await supabase.auth.getUser();
+        if (!userData.user) return;
+
+        const { data, error } = await supabase
+            .from("institutional_dialogues")
+            .insert({
+                initiator_id: userData.user.id,
+                interlocutor_name: newDialogueInterlocutorName,
+                interlocutor_type: newDialogueInterlocutor,
+                subject: newDialogueSubject,
+                status: 'active'
+            })
+            .select()
+            .single();
+
+        if (!error && data) {
+            setNewDialogueSubject("");
+            setNewDialogueInterlocutorName("");
+            setShowNewDialogueModal(false);
+            fetchDialogues();
+        }
+    }
 
     async function fetchCaregivers() {
         setLoading(true);
-        const isDemo = document.cookie.includes("demo_mode=true");
-        if (isDemo) {
-            setCaregivers([
-                { id: 'c1', profile_id: 'p1', nome: 'Marco', cognome: 'Rossi', specializzazione: 'OSS', certified: true, tipo_certificazione: 'Avanzata' },
-                { id: 'c2', profile_id: 'p2', nome: 'Elena', cognome: 'Bianchi', specializzazione: 'Infermiera', certified: false },
-                { id: 'c3', profile_id: 'p3', nome: 'Giulia', cognome: 'Verdi', specializzazione: 'Caregiver Familiare', certified: false }
-            ]);
-            setLoading(false);
-            return;
-        }
-
         const supabase = supabaseBrowserClient();
         const { data, error } = await supabase
-            .from("caregiver_profiles")
+            .from("badanti")
             .select(`
                 id,
-                specializzazione,
+                certificazioni,
                 profiles:profile_id (id, nome, cognome)
             `);
 
@@ -72,8 +147,9 @@ export default function AssociazioneDashboard() {
                 profile_id: d.profiles.id,
                 nome: d.profiles.nome,
                 cognome: d.profiles.cognome,
-                specializzazione: d.specializzazione,
-                certified: false
+                specializzazione: 'Professionista della Cura', // Default se non specificato in bio
+                certified: (d.certificazioni?.length || 0) > 0,
+                tipo_certificazione: d.certificazioni?.[0] || 'Base'
             }));
             setCaregivers(formatted);
         }
@@ -98,25 +174,43 @@ export default function AssociazioneDashboard() {
     }
 
     async function handleCertify(caregiverId: string, level: string) {
-        // Simulazione per demo / ottimizzazione UI
-        setCaregivers(prev => prev.map(cg =>
-            cg.id === caregiverId ? { ...cg, certified: true, tipo_certificazione: level } : cg
-        ));
+        setLoading(true);
+        const supabase = supabaseBrowserClient();
 
-        // Logica DB futura (Supabase)
-        // await supabase.from('caregiver_certifications').upsert({ caregiver_id: ..., tipo: level })
+        // Recupero le certificazioni attuali
+        const { data: current } = await supabase
+            .from('badanti')
+            .select('certificazioni')
+            .eq('id', caregiverId)
+            .single();
 
-        alert(`Certificazione ${level} emessa con successo per il professionista.`);
+        const updatedCerts = Array.from(new Set([...(current?.certificazioni || []), level]));
+
+        const { error } = await supabase
+            .from('badanti')
+            .update({ certificazioni: updatedCerts })
+            .eq('id', caregiverId);
+
+        if (!error) {
+            alert(`Certificazione ${level} emessa con successo.`);
+            fetchCaregivers();
+        }
+        setLoading(false);
     }
 
     async function downloadInstitutionalReport() {
         setGeneratingReport(true);
-        // Simulazione elaborazione IA dei dati territoriali
-        setTimeout(() => {
-            setGeneratingReport(false);
-            alert("Report Ecosistemico Generato. Il documento include l'analisi della densità dei bisogni e le raccomandazioni strategiche per l'ente.");
-            // Qui andrebbe la logica per generare il PDF o scaricare il file Excel
-        }, 2000);
+        // Generazione di un report testuale basato sui dati reali
+        const reportContent = bisogni.map(b => `${b.created_at}: [${b.categoria.toUpperCase()}] ${b.titolo} - Stato: ${b.stato_validazione}`).join('\n');
+        const blob = new Blob([`CAREMATCH ECOSYSTEM REPORT - ${new Date().toLocaleDateString()}\n\n${reportContent}`], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `report_istituzionale_${new Date().toISOString().split('T')[0]}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        setGeneratingReport(false);
     }
 
     async function handleUpdateStatus(id: string, newStatus: string) {
@@ -206,11 +300,14 @@ export default function AssociazioneDashboard() {
                         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
                             <div className="lg:col-span-3">
                                 <EcosystemHeatmap
-                                    points={[
-                                        { id: 'a1', x: 30, y: 40, intensity: 0.8, label: 'Area Ovest - Mobilità', category: 'Trasporto' },
-                                        { id: 'a2', x: 70, y: 25, intensity: 0.5, label: 'Centro - Supporto', category: 'Assistenza' },
-                                        { id: 'a3', x: 50, y: 65, intensity: 0.7, label: 'Periferia - Barriere', category: 'Infrastruttura' },
-                                    ]}
+                                    points={bisogni.map((b, i) => ({
+                                        id: b.id,
+                                        x: 10 + (parseInt(b.id.substring(0, 2), 16) % 80), // Posizione deterministica ma distribuita
+                                        y: 15 + (parseInt(b.id.substring(2, 4), 16) % 70),
+                                        intensity: b.stato_validazione === 'in_attesa' ? 0.9 : 0.4,
+                                        label: b.titolo,
+                                        category: b.categoria
+                                    }))}
                                 />
                             </div>
                             <div className="space-y-6">
@@ -335,61 +432,95 @@ export default function AssociazioneDashboard() {
                     </div>
                 </section>
             ) : (
-                /* Dialogue Tab */
+                /* Dialogue Tab - Real Logic */
                 <section className="animate-in fade-in slide-in-from-left-4 duration-500">
                     <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
                         <div className="lg:col-span-1 space-y-6">
-                            <h3 className="text-xs font-black uppercase tracking-widest text-neutral-400 mb-6">Interlocutori Attivi</h3>
-                            {[
-                                { name: "Assessorato Politiche Sociali", status: "online", last: "2h fa", type: "Comune" },
-                                { name: "Tavolo Disabilità Distretto 1", status: "away", last: "1g fa", type: "AUSL" },
-                                { name: "Segreteria Consiliare", status: "offline", last: "3g fa", type: "Istituzione" }
-                            ].map((contact, i) => (
-                                <div key={i} className="p-4 bg-white border border-neutral-100 rounded-2xl hover:border-blue-600 transition-all cursor-pointer group">
+                            <div className="flex justify-between items-center mb-6">
+                                <h3 className="text-xs font-black uppercase tracking-widest text-neutral-400">Interlocutori Attivi</h3>
+                                <button
+                                    onClick={() => setShowNewDialogueModal(true)}
+                                    className="text-[10px] font-black text-blue-600 hover:text-black uppercase tracking-tighter"
+                                >
+                                    + Nuovo
+                                </button>
+                            </div>
+                            {dialogues.length === 0 ? (
+                                <p className="text-[10px] text-neutral-400 font-bold uppercase tracking-widest pl-2">Nessun dialogo attivo</p>
+                            ) : dialogues.map((dialogue, i) => (
+                                <div
+                                    key={dialogue.id}
+                                    onClick={() => {
+                                        setSelectedDialogue(dialogue);
+                                        fetchMessages(dialogue.id);
+                                    }}
+                                    className={`p-4 bg-white border rounded-2xl transition-all cursor-pointer group ${selectedDialogue?.id === dialogue.id ? 'border-blue-600 shadow-lg' : 'border-neutral-100 hover:border-blue-300'}`}
+                                >
                                     <div className="flex items-center gap-4">
-                                        <div className={`w-2 h-2 rounded-full ${contact.status === 'online' ? 'bg-green-500' : 'bg-neutral-300'}`} />
+                                        <div className={`w-2 h-2 rounded-full ${dialogue.status === 'active' ? 'bg-green-500' : 'bg-neutral-300'}`} />
                                         <div className="flex-1">
-                                            <p className="text-[10px] font-black uppercase tracking-tight text-black">{contact.name}</p>
-                                            <p className="text-[8px] text-neutral-400 font-bold uppercase mt-0.5">{contact.type} • {contact.last}</p>
+                                            <p className="text-[10px] font-black uppercase tracking-tight text-black">{dialogue.interlocutor_name}</p>
+                                            <p className="text-[8px] text-neutral-400 font-bold uppercase mt-0.5">{dialogue.interlocutor_type} • {new Date(dialogue.updated_at).toLocaleDateString()}</p>
                                         </div>
                                     </div>
                                 </div>
                             ))}
                         </div>
                         <div className="lg:col-span-3 flex flex-col h-[600px] border border-neutral-100 rounded-3xl overflow-hidden bg-white shadow-2xl shadow-neutral-200/50">
-                            <div className="p-6 border-b border-neutral-50 flex justify-between items-center bg-neutral-50/50">
-                                <div>
-                                    <h4 className="text-xs font-black uppercase tracking-widest">Assessorato Politiche Sociali</h4>
-                                    <p className="text-[9px] text-blue-600 font-bold uppercase mt-1 italic">Oggetto: Criticità Trasporto Area Ovest (ID #TR-442)</p>
-                                </div>
-                                <span className="px-3 py-1 bg-black text-white text-[8px] font-black uppercase tracking-widest rounded-full">Canale Certificato</span>
-                            </div>
-                            <div className="flex-1 p-8 overflow-y-auto space-y-8">
-                                <div className="max-w-[80%]">
-                                    <div className="bg-neutral-100 p-6 rounded-2xl rounded-tl-none font-serif italic text-sm text-neutral-600 leading-relaxed">
-                                        Buongiorno. Abbiamo analizzato i dati aggregati che ci avete inviato tramite il report dell'Audit.
-                                        Siamo preoccupati per l'aumento delle segnalazioni nel quadrante Ovest. Potete fornirci il dettaglio anonimizzato delle fasce orarie più colpite?
+                            {selectedDialogue ? (
+                                <>
+                                    <div className="p-6 border-b border-neutral-50 flex justify-between items-center bg-neutral-50/50">
+                                        <div>
+                                            <h4 className="text-xs font-black uppercase tracking-widest">{selectedDialogue.interlocutor_name}</h4>
+                                            <p className="text-[9px] text-blue-600 font-bold uppercase mt-1 italic">Oggetto: {selectedDialogue.subject}</p>
+                                        </div>
+                                        <span className="px-3 py-1 bg-black text-white text-[8px] font-black uppercase tracking-widest rounded-full">Canale Certificato</span>
                                     </div>
-                                    <span className="text-[8px] font-mono uppercase text-neutral-400 mt-2 block ml-2">Assessorato • 10:45</span>
-                                </div>
-                                <div className="max-w-[80%] ml-auto text-right">
-                                    <div className="bg-blue-600 text-white p-6 rounded-2xl rounded-tr-none text-xs leading-relaxed">
-                                        Certamente. Stiamo estraendo i dati granulari. Anticipiamo che l'80% dei disservizi avviene tra le 07:30 e le 09:00, impattando prevalentemente studenti universitari e lavoratori.
+                                    <div className="flex-1 p-8 overflow-y-auto space-y-8">
+                                        {messages.length === 0 ? (
+                                            <div className="h-full flex items-center justify-center text-[10px] text-neutral-300 uppercase font-black tracking-widest italic">
+                                                Inizio della comunicazione certificata
+                                            </div>
+                                        ) : messages.map((msg: any) => (
+                                            <div key={msg.id} className={`max-w-[80%] ${msg.sender_type === 'association' ? 'ml-auto text-right' : ''}`}>
+                                                <div className={`p-6 rounded-2xl ${msg.sender_type === 'association'
+                                                    ? 'bg-blue-600 text-white rounded-tr-none text-xs'
+                                                    : 'bg-neutral-100 text-neutral-600 rounded-tl-none font-serif italic text-sm'
+                                                    } leading-relaxed`}>
+                                                    {msg.content}
+                                                </div>
+                                                <span className={`text-[8px] font-mono uppercase text-neutral-400 mt-2 block ${msg.sender_type === 'association' ? 'mr-2' : 'ml-2'}`}>
+                                                    {msg.sender_type === 'association' ? 'Voi (FISH Node)' : selectedDialogue.interlocutor_name} • {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                </span>
+                                            </div>
+                                        ))}
                                     </div>
-                                    <span className="text-[8px] font-mono uppercase text-neutral-400 mt-2 block mr-2">Voi (FISH Node) • 11:15</span>
+                                    <div className="p-6 border-t border-neutral-50 bg-neutral-50/20">
+                                        <div className="flex gap-4">
+                                            <input
+                                                type="text"
+                                                value={newMessage}
+                                                onChange={(e) => setNewMessage(e.target.value)}
+                                                onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+                                                placeholder="Scrivi un messaggio certificato..."
+                                                className="flex-1 bg-white border border-neutral-200 px-6 py-4 rounded-xl text-xs outline-none focus:border-blue-600 transition-all"
+                                            />
+                                            <button
+                                                onClick={handleSendMessage}
+                                                className="px-8 py-4 bg-black text-white text-[9px] font-black uppercase tracking-widest rounded-xl hover:bg-blue-600 transition-all"
+                                            >
+                                                Invia Corrispondenza
+                                            </button>
+                                        </div>
+                                        <p className="text-[8px] text-neutral-400 mt-4 text-center uppercase tracking-widest font-bold">I messaggi inviati tramite questo canale hanno valore di notifica istituzionale.</p>
+                                    </div>
+                                </>
+                            ) : (
+                                <div className="h-full flex flex-col items-center justify-center space-y-6">
+                                    <div className="w-12 h-12 bg-neutral-50 rounded-3xl flex items-center justify-center text-2xl grayscale opacity-30">🏛️</div>
+                                    <p className="text-[10px] text-neutral-300 font-bold uppercase tracking-widest italic">Seleziona un interlocutore per iniziare il dialogo</p>
                                 </div>
-                            </div>
-                            <div className="p-6 border-t border-neutral-50 bg-neutral-50/20">
-                                <div className="flex gap-4">
-                                    <input
-                                        type="text"
-                                        placeholder="Scrivi un messaggio certificato..."
-                                        className="flex-1 bg-white border border-neutral-200 px-6 py-4 rounded-xl text-xs outline-none focus:border-blue-600 transition-all"
-                                    />
-                                    <button className="px-8 py-4 bg-black text-white text-[9px] font-black uppercase tracking-widest rounded-xl hover:bg-blue-600 transition-all">Invia Corrispondenza</button>
-                                </div>
-                                <p className="text-[8px] text-neutral-400 mt-4 text-center uppercase tracking-widest font-bold">I messaggi inviati tramite questo canale hanno valore di notifica istituzionale.</p>
-                            </div>
+                            )}
                         </div>
                     </div>
                 </section>
@@ -517,6 +648,60 @@ export default function AssociazioneDashboard() {
                                 L'azione aggiornerà lo stato per il cittadino e per l'ecosistema territoriale.
                             </p>
                         </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal di Nuovo Dialogo */}
+            {showNewDialogueModal && (
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[110] flex items-center justify-center p-6">
+                    <div className="bg-white w-full max-w-md rounded-3xl overflow-hidden shadow-2xl p-10 space-y-8 animate-in zoom-in-95 duration-300">
+                        <div className="flex justify-between items-center">
+                            <h3 className="text-xl font-black tracking-tighter uppercase font-serif italic">Avvia Dialogo Certificato</h3>
+                            <button onClick={() => setShowNewDialogueModal(false)} className="text-neutral-400">✕</button>
+                        </div>
+                        <div className="space-y-4">
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black uppercase text-neutral-400 tracking-widest">Ente Destinatario</label>
+                                <input
+                                    type="text"
+                                    placeholder="Es: Comune di Milano - Settore Sociale"
+                                    value={newDialogueInterlocutorName}
+                                    onChange={(e) => setNewDialogueInterlocutorName(e.target.value)}
+                                    className="w-full bg-neutral-50 border border-neutral-100 p-4 rounded-xl text-xs outline-none focus:border-blue-600"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black uppercase text-neutral-400 tracking-widest">Tipo Istituzione</label>
+                                <select
+                                    value={newDialogueInterlocutor}
+                                    onChange={(e) => setNewDialogueInterlocutor(e.target.value)}
+                                    className="w-full bg-neutral-50 border border-neutral-100 p-4 rounded-xl text-xs outline-none focus:border-blue-600"
+                                >
+                                    <option value="Comune">Comune</option>
+                                    <option value="AUSL">AUSL</option>
+                                    <option value="Provincia">Provincia</option>
+                                    <option value="Regione">Regione</option>
+                                    <option value="Istituzione">Altro Ente</option>
+                                </select>
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black uppercase text-neutral-400 tracking-widest">Oggetto della Corrispondenza</label>
+                                <input
+                                    type="text"
+                                    placeholder="Es: Riorganizzazione servizi Area Ovest"
+                                    value={newDialogueSubject}
+                                    onChange={(e) => setNewDialogueSubject(e.target.value)}
+                                    className="w-full bg-neutral-50 border border-neutral-100 p-4 rounded-xl text-xs outline-none focus:border-blue-600"
+                                />
+                            </div>
+                        </div>
+                        <button
+                            onClick={handleCreateDialogue}
+                            className="w-full py-4 bg-black text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-blue-600 transition-all"
+                        >
+                            Crea Canale Certificato
+                        </button>
                     </div>
                 </div>
             )}
