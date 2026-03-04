@@ -103,7 +103,7 @@ export default function LoginPage() {
             <div className="w-5 h-5 bg-black rounded-[2px]" />
             <span className="text-lg font-bold tracking-tight text-neutral-900">Carematch OS</span>
           </Link>
-          <p className="text-xs font-medium text-neutral-500 uppercase tracking-widest font-mono">Authentication Gateway</p>
+          <p className="text-xs font-medium text-neutral-500 uppercase tracking-widest font-mono">Authentication Gateway v2.1</p>
         </div>
 
         <div className="bg-white border border-neutral-200 p-8 rounded-2xl shadow-xl">
