@@ -41,7 +41,7 @@ export default function DashboardRouter() {
       const { data: profile } = await supabase
         .from("profiles")
         .select("role, onboarding_status")
-        .eq("id", user.id)
+        .eq("user_id", user.id)
         .maybeSingle();
 
       if (profile?.onboarding_status !== "completed") {
