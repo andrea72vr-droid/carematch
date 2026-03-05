@@ -12,12 +12,23 @@ export async function GET(request: Request) {
         const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
         const { data: { session } } = await supabase.auth.exchangeCodeForSession(code);
 
-        // If we have a role from the OAuth flow, update the profile
-        if (session?.user && role) {
-            await supabase
-                .from("profiles")
-                .update({ role })
-                .eq("id", session.user.id);
+        if (session?.user) {
+            // 1. Assicuriamoci che l'utente esista in public.users
+            // Se non c'è il ruolo, default disabile
+            const uRole = (role || 'disabile');
+            await supabase.from("users").upsert({
+                id: session.user.id,
+                email: session.user.email,
+                role: uRole
+            }, { onConflict: 'id' });
+
+            // 2. Assicuriamoci che il profilo esista in public.profiles
+            // Usiamo role se presente, altrimenti disabile
+            await supabase.from("profiles").upsert({
+                user_id: session.user.id,
+                role: uRole,
+                id: session.user.id // Usiamo lo stesso ID per coerenza
+            }, { onConflict: 'id' });
         }
     }
 
