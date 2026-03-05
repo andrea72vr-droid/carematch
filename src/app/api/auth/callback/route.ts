@@ -10,7 +10,13 @@ export async function GET(request: Request) {
     if (code) {
         const cookieStore = cookies();
         const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
-        const { data: { session } } = await supabase.auth.exchangeCodeForSession(code);
+        const { data: { session }, error: sessionError } = await supabase.auth.exchangeCodeForSession(code);
+
+        console.log("Auth callback session check:", {
+            hasSession: !!session,
+            userId: session?.user?.id,
+            error: sessionError?.message
+        });
 
         if (session?.user) {
             // 1. Assicuriamoci che l'utente esista in public.users

@@ -31,8 +31,8 @@ export default function DashboardRouter() {
       }
 
       const supabase = supabaseBrowserClient();
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
         router.push("/login");
         return;
       }
@@ -40,7 +40,7 @@ export default function DashboardRouter() {
       const { data: profile } = await supabase
         .from("profiles")
         .select("role, onboarding_status")
-        .eq("id", session.user.id)
+        .eq("id", user.id)
         .maybeSingle();
 
       if (profile?.onboarding_status !== "completed") {

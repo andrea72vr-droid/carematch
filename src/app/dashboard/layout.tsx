@@ -30,19 +30,19 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                 }
 
                 const supabase = supabaseBrowserClient();
-                const { data: { session } } = await supabase.auth.getSession();
+                const { data: { user } } = await supabase.auth.getUser();
 
-                if (!session) {
+                if (!user) {
                     window.location.href = "/login";
                     return;
                 }
 
-                setEmail(session.user.email ?? null);
+                setEmail(user.email ?? null);
 
                 const { data: profile } = await supabase
                     .from("profiles")
                     .select("role")
-                    .eq("id", session.user.id)
+                    .eq("id", user.id)
                     .maybeSingle();
 
                 if (profile) {
