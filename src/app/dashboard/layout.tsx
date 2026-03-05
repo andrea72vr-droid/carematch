@@ -14,8 +14,13 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     useEffect(() => {
         async function loadAuth() {
             try {
+                const supabase = supabaseBrowserClient();
+                const { data: { user } } = await supabase.auth.getUser();
                 const isDemo = document.cookie.includes("demo_mode=true");
-                if (isDemo) {
+
+                if (user) {
+                    setEmail(user.email ?? null);
+                } else if (isDemo) {
                     const demoRoleMatch = document.cookie.match(/demo_role=([^;]+)/);
                     const demoRole = (demoRoleMatch ? demoRoleMatch[1] : "supervisor") as Role;
 
@@ -27,17 +32,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                     setRole(demoRole);
                     setLoading(false);
                     return;
-                }
-
-                const supabase = supabaseBrowserClient();
-                const { data: { user } } = await supabase.auth.getUser();
-
-                if (!user) {
+                } else {
                     window.location.href = "/login";
                     return;
                 }
-
-                setEmail(user.email ?? null);
 
                 const { data: profile } = await supabase
                     .from("profiles")

@@ -15,8 +15,13 @@ export default function DashboardRouter() {
 
   useEffect(() => {
     async function checkRole() {
+      const supabase = supabaseBrowserClient();
+      const { data: { user } } = await supabase.auth.getUser();
       const isDemo = document.cookie.includes("demo_mode=true");
-      if (isDemo) {
+
+      if (user) {
+        // Continue with real profile logic
+      } else if (isDemo) {
         const demoRoleMatch = document.cookie.match(/demo_role=([^;]+)/);
         const demoRole = (demoRoleMatch ? demoRoleMatch[1] : "admin") as Role;
 
@@ -28,11 +33,7 @@ export default function DashboardRouter() {
         setRole(demoRole);
         router.push(`/dashboard/${target}`);
         return;
-      }
-
-      const supabase = supabaseBrowserClient();
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
+      } else {
         router.push("/login");
         return;
       }
