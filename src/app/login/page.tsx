@@ -46,6 +46,10 @@ export default function LoginPage() {
     setLoading(true);
     setMessage(null);
     try {
+      // Pulisci subito i cookie della demo per evitare sovrapposizioni
+      document.cookie = "demo_mode=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "demo_role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
       const supabase = supabaseBrowserClient();
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
