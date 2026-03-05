@@ -32,7 +32,10 @@ export default function DashboardRouter() {
 
       const supabase = supabaseBrowserClient();
       const { data: { session } } = await supabase.auth.getSession();
-      if (!session) return;
+      if (!session) {
+        router.push("/login");
+        return;
+      }
 
       const { data: profile } = await supabase
         .from("profiles")
