@@ -12,7 +12,7 @@ export default function HomePage() {
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 bg-black rounded-[2px]" />
             <span className="text-sm font-bold tracking-tight text-black">Carematch OS</span>
-            <span className="text-[10px] bg-blue-50 border border-blue-100 px-1.5 py-0.5 rounded text-blue-600 font-mono">v2.0 - Ecosystem</span>
+            <span className="text-[10px] bg-blue-50 border border-blue-100 px-1.5 py-0.5 rounded text-blue-600 font-mono">v2.1 - Ecosystem</span>
           </div>
           <div className="flex items-center gap-6">
             <Link href="/login" className="text-xs font-medium text-neutral-500 hover:text-black transition-colors">
