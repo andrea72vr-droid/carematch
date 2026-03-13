@@ -1,0 +1,460 @@
+{
+    "caregiver_profiles": [
+        {
+            "id": "c-001",
+            "category": "Tecnico e Strutturato",
+            "name": "Marta",
+            "raw_competenze_esperienze": {
+                "nome_completo": "Marta Rossi",
+                "provincia": "Verona",
+                "lingue": [
+                    "Italiano",
+                    "Inglese"
+                ],
+                "disponibilita": [
+                    "Full-time",
+                    "Notturno"
+                ]
+            },
+            "raw_approccio_cura": {
+                "anni_esperienza": 12,
+                "tipologie_assistenza": [
+                    "Disabilità motoria",
+                    "Post-operatorio",
+                    "Geriatria"
+                ],
+                "competenze_specifiche": [
+                    "Sollevamento",
+                    "Gestione farmaci",
+                    "Medicazioni"
+                ],
+                "certificazioni": [
+                    "OSS",
+                    "Primo soccorso"
+                ]
+            },
+            "raw_stile_relazionale": {
+                "preferenze_relazionali": "Professionale-empatico",
+                "modalita_comunicativa": "Ascolto attivo",
+                "attivita_preferite": [
+                    "Lettura",
+                    "Conversazione"
+                ]
+            },
+            "psychological_profile": {
+                "stile_comunicativo": "Comunico quando necessario, preferisco i fatti",
+                "livello_iniziativa": "Aspetto che mi venga detto cosa fare",
+                "approccio_emotivo": "Professionale ma distaccato",
+                "energia_personale": "Calmo e riflessivo",
+                "routine_flessibilita": 2,
+                "tolleranza_imprevisti": "Chiedo alla famiglia come procedere",
+                "contesto_lavorativo": "Preferisco ambienti tranquilli e silenziosi",
+                "presenza_famiglia": "Lavoro meglio in autonomia completa",
+                "motivazione": [
+                    "Professione che mi realizza"
+                ]
+            },
+            "raw_valori_personali": {
+                "descrizione": "Sono una professionista con anni di esperienza in ambito ospedaliero e domiciliare. Prediligo l'efficacia e la precisione tecnica."
+            }
+        },
+        {
+            "id": "c-002",
+            "category": "Empatico e Relazionale",
+            "name": "Sofia",
+            "raw_competenze_esperienze": {
+                "nome_completo": "Sofia Bianchi",
+                "provincia": "Milano",
+                "lingue": [
+                    "Italiano",
+                    "Spagnolo"
+                ],
+                "disponibilita": [
+                    "Part-time",
+                    "Weekend"
+                ]
+            },
+            "raw_approccio_cura": {
+                "anni_esperienza": 5,
+                "tipologie_assistenza": [
+                    "Disabilità cognitiva",
+                    "Compagnia"
+                ],
+                "competenze_specifiche": [
+                    "Stimolazione cognitiva",
+                    "Cucina",
+                    "Igiene"
+                ],
+                "certificazioni": [
+                    "Animatore sociale"
+                ]
+            },
+            "raw_stile_relazionale": {
+                "preferenze_relazionali": "Familiare",
+                "modalita_comunicativa": "Paziente",
+                "attivita_preferite": [
+                    "Musica",
+                    "Cucina",
+                    "Passeggiate"
+                ]
+            },
+            "psychological_profile": {
+                "stile_comunicativo": "Motivo e incoraggio costantemente",
+                "livello_iniziativa": "Propongo attività ma chiedo conferma",
+                "approccio_emotivo": "Empatico e coinvolto emotivamente",
+                "energia_personale": "Dinamico e attivo",
+                "routine_flessibilita": 8,
+                "tolleranza_imprevisti": "Propongo un'alternativa",
+                "contesto_lavorativo": "Mi trovo bene in case vivaci e attive",
+                "presenza_famiglia": "Preferisco lavorare con la famiglia presente",
+                "motivazione": [
+                    "Vocazione alla cura",
+                    "Esperienza personale"
+                ]
+            },
+            "raw_valori_personali": {
+                "descrizione": "Amo stare con le persone e creare un legame profondo. Per me la cura passa prima di tutto attraverso il sorriso e l'ascolto."
+            }
+        },
+        {
+            "id": "c-003",
+            "category": "Proattivo e Dinamico",
+            "name": "Luca",
+            "raw_competenze_esperienze": {
+                "nome_completo": "Luca Verdi",
+                "provincia": "Torino",
+                "lingue": [
+                    "Italiano",
+                    "Francese"
+                ],
+                "disponibilita": [
+                    "Varia",
+                    "Accompagnamento"
+                ]
+            },
+            "raw_approccio_cura": {
+                "anni_esperienza": 3,
+                "tipologie_assistenza": [
+                    "Disabilità motoria lieve",
+                    "Autismo"
+                ],
+                "competenze_specifiche": [
+                    "Accompagnamento",
+                    "Sport",
+                    "Informatica"
+                ],
+                "certificazioni": [
+                    "Personal Trainer"
+                ]
+            },
+            "raw_stile_relazionale": {
+                "preferenze_relazionali": "Amichevole-energetico",
+                "modalita_comunicativa": "Propositivo",
+                "attivita_preferite": [
+                    "Sport",
+                    "Viaggi",
+                    "Tecnologia"
+                ]
+            },
+            "psychological_profile": {
+                "stile_comunicativo": "Parlo apertamente e direttamente",
+                "livello_iniziativa": "Organizzo la giornata in autonomia",
+                "approccio_emotivo": "Professionale ma distaccato",
+                "energia_personale": "Dinamico e attivo",
+                "routine_flessibilita": 9,
+                "tolleranza_imprevisti": "Accetto e riprovi più tardi",
+                "contesto_lavorativo": "Indifferente, mi adatto",
+                "presenza_famiglia": "Equilibrio: collaborazione ma autonomia",
+                "motivazione": [
+                    "Professione che mi realizza"
+                ]
+            },
+            "raw_valori_personali": {
+                "descrizione": "Sono un ragazzo energico che crede nell'integrazione attraverso l'attività fisica e la scoperta. Non solo assistenza, ma vera partecipazione."
+            }
+        },
+        {
+            "id": "c-004",
+            "category": "Calmo e Routinario",
+            "name": "Anna",
+            "raw_competenze_esperienze": {
+                "nome_completo": "Anna Neri",
+                "provincia": "Bologna",
+                "lingue": [
+                    "Italiano"
+                ],
+                "disponibilita": [
+                    "Full-time"
+                ]
+            },
+            "raw_approccio_cura": {
+                "anni_esperienza": 20,
+                "tipologie_assistenza": [
+                    "Geriatria",
+                    "Alzheimer",
+                    "Parkinson"
+                ],
+                "competenze_specifiche": [
+                    "Igiene",
+                    "Alimentazione",
+                    "Gestione routine"
+                ],
+                "certificazioni": [
+                    "OSA"
+                ]
+            },
+            "raw_stile_relazionale": {
+                "preferenze_relazionali": "Professionale-calmo",
+                "modalita_comunicativa": "Paziente",
+                "attivita_preferite": [
+                    "Giardinaggio",
+                    "Conversazione",
+                    "Maglia"
+                ]
+            },
+            "psychological_profile": {
+                "stile_comunicativo": "Ascolto e osservo prima di parlare",
+                "livello_iniziativa": "Propongo attività ma chiedo conferma",
+                "approccio_emotivo": "Protettivo, come un familiare",
+                "energia_personale": "Calmo e riflessivo",
+                "routine_flessibilita": 1,
+                "tolleranza_imprevisti": "Insisto gentilmente spiegando l'importanza",
+                "contesto_lavorativo": "Preferisco ambienti tranquilli e silenziosi",
+                "presenza_famiglia": "Lavoro meglio in autonomia completa",
+                "motivazione": [
+                    "Stabilità economica",
+                    "Vocazione alla cura"
+                ]
+            },
+            "raw_valori_personali": {
+                "descrizione": "La mia forza è la pazienza. Amo creare un ambiente sereno e prevedibile dove l'assistito possa sentirsi tranquillo."
+            }
+        },
+        {
+            "id": "c-005",
+            "category": "Junior Motivato",
+            "name": "Elena",
+            "raw_competenze_esperienze": {
+                "nome_completo": "Elena Gialli",
+                "provincia": "Padova",
+                "lingue": [
+                    "Italiano",
+                    "Inglese"
+                ],
+                "disponibilita": [
+                    "Part-time",
+                    "Studentessa"
+                ]
+            },
+            "raw_approccio_cura": {
+                "anni_esperienza": 1,
+                "tipologie_assistenza": [
+                    "Bambini",
+                    "Compagnia"
+                ],
+                "competenze_specifiche": [
+                    "Studio assistito",
+                    "Passeggiate",
+                    "Tecnologia"
+                ],
+                "certificazioni": []
+            },
+            "raw_stile_relazionale": {
+                "preferenze_relazionali": "Amichevole-giovanile",
+                "modalita_comunicativa": "Entusiasta",
+                "attivita_preferite": [
+                    "Giochi",
+                    "Lettura",
+                    "Social media"
+                ]
+            },
+            "psychological_profile": {
+                "stile_comunicativo": "Motivo e incoraggio costantemente",
+                "livello_iniziativa": "Aspetto che mi venga detto cosa fare",
+                "approccio_emotivo": "Empatico e coinvolto emotivamente",
+                "energia_personale": "Dinamico e attivo",
+                "routine_flessibilita": 7,
+                "tolleranza_imprevisti": "Chiedo alla famiglia come procedere",
+                "contesto_lavorativo": "Mi trovo bene in case vivaci e attive",
+                "presenza_famiglia": "Preferisco lavorare con la famiglia presente",
+                "motivazione": [
+                    "Vocazione alla cura",
+                    "Esperienza personale"
+                ]
+            },
+            "raw_valori_personali": {
+                "descrizione": "Ho iniziato aiutando i miei nonni e ora vorrei trasformare questa passione in lavoro. Ho molto entusiasmo e voglia di imparare."
+            }
+        },
+        {
+            "id": "c-006",
+            "category": "Professionale Distaccato",
+            "name": "Giorgio",
+            "raw_competenze_esperienze": {
+                "nome_completo": "Giorgio Moretti",
+                "provincia": "Roma",
+                "lingue": [
+                    "Italiano",
+                    "Francese"
+                ],
+                "disponibilita": [
+                    "Turnismo",
+                    "Full-time"
+                ]
+            },
+            "raw_approccio_cura": {
+                "anni_esperienza": 8,
+                "tipologie_assistenza": [
+                    "Cure palliative",
+                    "Post-operatorio"
+                ],
+                "competenze_specifiche": [
+                    "Gestione dolore",
+                    "Infermeria base",
+                    "Igiene"
+                ],
+                "certificazioni": [
+                    "OSS"
+                ]
+            },
+            "raw_stile_relazionale": {
+                "preferenze_relazionali": "Formale",
+                "modalita_comunicativa": "Essenziale",
+                "attivita_preferite": [
+                    "Silenzio",
+                    "Monitoraggio"
+                ]
+            },
+            "psychological_profile": {
+                "stile_comunicativo": "Comunico quando necessario, preferisco i fatti",
+                "livello_iniziativa": "Aspetto che mi venga detto cosa fare",
+                "approccio_emotivo": "Professionale ma distaccato",
+                "energia_personale": "Calmo e riflessivo",
+                "routine_flessibilita": 3,
+                "tolleranza_imprevisti": "Insisto gentilmente spiegando l'importanza",
+                "contesto_lavorativo": "Preferisco ambienti tranquilli e silenziosi",
+                "presenza_famiglia": "Lavoro meglio in autonomia completa",
+                "motivazione": [
+                    "Professione che mi realizza"
+                ]
+            },
+            "raw_valori_personali": {
+                "descrizione": "Il mio compito è garantire la sicurezza e la salute fisica dell'assistito. Rispetto rigorosamente la privacy e i confini professionali."
+            }
+        },
+        {
+            "id": "c-007",
+            "category": "Flessibile ma Poco Strutturato",
+            "name": "Alice",
+            "raw_competenze_esperienze": {
+                "nome_completo": "Alice Pozzi",
+                "provincia": "Firenze",
+                "lingue": [
+                    "Italiano",
+                    "Inglese"
+                ],
+                "disponibilita": [
+                    "Flessibile",
+                    "H24"
+                ]
+            },
+            "raw_approccio_cura": {
+                "anni_esperienza": 4,
+                "tipologie_assistenza": [
+                    "Polivalente",
+                    "Cucina",
+                    "Stiro"
+                ],
+                "competenze_specifiche": [
+                    "Adattabilità",
+                    "Spesa",
+                    "Piccole riparazioni"
+                ],
+                "certificazioni": []
+            },
+            "raw_stile_relazionale": {
+                "preferenze_relazionali": "Informale",
+                "modalita_comunicativa": "Chiacchierona",
+                "attivita_preferite": [
+                    "Conversazione",
+                    "Passeggiate",
+                    "Shopping"
+                ]
+            },
+            "psychological_profile": {
+                "stile_comunicativo": "Parlo apertamente e direttamente",
+                "livello_iniziativa": "Organizzo la giornata in autonomia",
+                "approccio_emotivo": "Empatico e coinvolto emotivamente",
+                "energia_personale": "Dinamico e attivo",
+                "routine_flessibilita": 10,
+                "tolleranza_imprevisti": "Accetto e riprovi più tardi",
+                "contesto_lavorativo": "Indifferente, mi adatto",
+                "presenza_famiglia": "Equilibrio: collaborazione ma autonomia",
+                "motivazione": [
+                    "Stabilità economica",
+                    "Vocazione alla cura"
+                ]
+            },
+            "raw_valori_personali": {
+                "descrizione": "Mi adatto a ogni situazione. Non amo i piani troppo rigidi, preferisco vivere la giornata in base ai bisogni del momento."
+            }
+        },
+        {
+            "id": "c-008",
+            "category": "Esperto con Limiti",
+            "name": "Roberto",
+            "raw_competenze_esperienze": {
+                "nome_completo": "Roberto Ricci",
+                "provincia": "Genova",
+                "lingue": [
+                    "Italiano"
+                ],
+                "disponibilita": [
+                    "Diurno solo",
+                    "Mattina/Pomeriggio"
+                ]
+            },
+            "raw_approccio_cura": {
+                "anni_esperienza": 15,
+                "tipologie_assistenza": [
+                    "Geriatria",
+                    "Parkinson",
+                    "Compagnia"
+                ],
+                "competenze_specifiche": [
+                    "Igiene",
+                    "Cucina",
+                    "Gestione farmaci"
+                ],
+                "certificazioni": [
+                    "OSS"
+                ]
+            },
+            "raw_stile_relazionale": {
+                "preferenze_relazionali": "Professionale",
+                "modalita_comunicativa": "Paziente",
+                "attivita_preferite": [
+                    "Scacchi",
+                    "Lettura",
+                    "Tv"
+                ]
+            },
+            "psychological_profile": {
+                "stile_comunicativo": "Ascolto e osservo prima di parlare",
+                "livello_iniziativa": "Propongo attività ma chiedo conferma",
+                "approccio_emotivo": "Protettivo, come un familiare",
+                "energia_personale": "Calmo e riflessivo",
+                "routine_flessibilita": 4,
+                "tolleranza_imprevisti": "Propongo un'alternativa",
+                "contesto_lavorativo": "Preferisco ambienti tranquilli e silenziosi",
+                "presenza_famiglia": "Lavoro meglio in autonomia completa",
+                "motivazione": [
+                    "Professione che mi realizza"
+                ]
+            },
+            "raw_valori_personali": {
+                "descrizione": "Ho grande esperienza, ma per motivi personali posso lavorare solo di giorno e non posso effettuare manovre di sollevamento pesanti."
+            }
+        }
+    ]
+}

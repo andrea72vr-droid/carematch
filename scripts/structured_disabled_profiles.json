@@ -1,0 +1,380 @@
+{
+    "disabled_profiles": [
+        {
+            "id": "d-001",
+            "category": "Complessità Fisica - Stabile Emotivamente",
+            "name": "Giulio",
+            "raw_contexto_vita": {
+                "eta": 45,
+                "tipo_disabilita": "Paraplegia post-traumatica",
+                "ambiente_domestico": "Appartamento moderno totalmente accessibile, molto ordinato."
+            },
+            "raw_bisogni_assistenziali": {
+                "livello_autonomia": "Parziale (solo busto e braccia)",
+                "bisogni_quotidiani": {
+                    "mobilita": true,
+                    "igiene": true,
+                    "farmaci": false,
+                    "compagnia": false,
+                    "casa": true
+                }
+            },
+            "raw_aspetti_relazionali": {
+                "personality": "Determinato, razionale, amante della tecnologia.",
+                "communicationStyle": "Diretto e chiaro, predilige precisione tecnica."
+            },
+            "psychological_profile": {
+                "stile_comunicativo_preferito": "Diretto e chiaro",
+                "livello_iniziativa_desiderato": "Può proporre ma chiediamo conferma",
+                "approccio_emotivo_desiderato": "Professionale e distaccata",
+                "ambiente_contesto": "Tranquillo e silenzioso",
+                "gestione_imprevisti": "Proponga alternative"
+            },
+            "raw_logistica": {
+                "ore_impegno": "Part-time (mattina)",
+                "supporto_notturno": false,
+                "flessibilita_festivita": false
+            },
+            "raw_preferenze_caregiver": {
+                "livello_esperienza": "Esperto (5+ anni)",
+                "competenze_richieste": [
+                    "movimentazione",
+                    "igiene",
+                    "tecnologia"
+                ]
+            },
+            "raw_valori_convivenza": {
+                "descrizione": "Cerco qualcuno che rispetti la mia autonomia residua e sia puntuale nei protocolli di igiene."
+            }
+        },
+        {
+            "id": "d-002",
+            "category": "Disabilità Cognitiva - Bisogno Relazionale",
+            "name": "Elda",
+            "raw_contexto_vita": {
+                "eta": 78,
+                "tipo_disabilita": "Alzheimer stadio iniziale",
+                "ambiente_domestico": "Casa accogliente, ricca di ricordi e fotografie."
+            },
+            "raw_bisogni_assistenziali": {
+                "livello_autonomia": "Basso per sicurezza e orientamento",
+                "bisogni_quotidiani": {
+                    "mobilita": false,
+                    "igiene": true,
+                    "farmaci": true,
+                    "compagnia": true,
+                    "casa": true
+                }
+            },
+            "raw_aspetti_relazionali": {
+                "personality": "Dolce, a tratti ansiosa, ama raccontare storie del passato.",
+                "communicationStyle": "Empatico e rassicurante, richiede pazienza."
+            },
+            "psychological_profile": {
+                "stile_comunicativo_preferito": "Empatico e rassicurante",
+                "livello_iniziativa_desiderato": "Può organizzare la giornata autonomamente",
+                "approccio_emotivo_desiderato": "Calda e familiare",
+                "ambiente_contesto": "Vivace, con famiglia sempre presente",
+                "gestione_imprevisti": "Accetti e riprovi dopo"
+            },
+            "raw_logistica": {
+                "ore_impegno": "Convivenza",
+                "supporto_notturno": true,
+                "flessibilita_festivita": true
+            },
+            "raw_preferenze_caregiver": {
+                "livello_esperienza": "Intermedio",
+                "competenze_richieste": [
+                    "compagnia",
+                    "stimolazione cognitiva",
+                    "cucina"
+                ]
+            },
+            "raw_valori_convivenza": {
+                "descrizione": "Abbiamo bisogno di una presenza rassicurante che faccia sentire Elda al sicuro e stimolata."
+            }
+        },
+        {
+            "id": "d-003",
+            "category": "Autonomo con Bisogni Specifici",
+            "name": "Marco",
+            "raw_contexto_vita": {
+                "eta": 32,
+                "tipo_disabilita": "Ipovisione grave",
+                "ambiente_domestico": "Open space minimale, domotica avanzata."
+            },
+            "raw_bisogni_assistenziali": {
+                "livello_autonomia": "Alto",
+                "bisogni_quotidiani": {
+                    "mobilita": true,
+                    "igiene": false,
+                    "farmaci": false,
+                    "compagnia": true,
+                    "casa": true
+                }
+            },
+            "raw_aspetti_relazionali": {
+                "personality": "Indipendente, colto, amante della musica e dei viaggi.",
+                "communicationStyle": "Motivante e propositivo, molto verbale."
+            },
+            "psychological_profile": {
+                "stile_comunicativo_preferito": "Motivante e propositivo",
+                "livello_iniziativa_desiderato": "Può proporre ma chiediamo conferma",
+                "approccio_emotivo_desiderato": "Empatica ma con confini chiari",
+                "ambiente_contesto": "Tranquillo e silenzioso",
+                "gestione_imprevisti": "Proponga alternative"
+            },
+            "raw_logistica": {
+                "ore_impegno": "Accesso saltuario / Accompagnamento",
+                "supporto_notturno": false,
+                "flessibilita_festivita": true
+            },
+            "raw_preferenze_caregiver": {
+                "livello_esperienza": "Junior motivato",
+                "competenze_richieste": [
+                    "accompagnamento estero",
+                    "lettura",
+                    "tecnologia"
+                ]
+            },
+            "raw_valori_convivenza": {
+                "descrizione": "Cerco un assistente che sia anche un compagno di attività culturali e mi aiuti con la logistica fuori casa."
+            }
+        },
+        {
+            "id": "d-004",
+            "category": "Famiglia Molto Presente",
+            "name": "Paolo",
+            "raw_contexto_vita": {
+                "eta": 12,
+                "tipo_disabilita": "Sindrome di Down",
+                "ambiente_domestico": "Grande appartamento familiare, sempre in movimento, fratelli presenti."
+            },
+            "raw_bisogni_assistenziali": {
+                "livello_autonomia": "Medio per l'età",
+                "bisogni_quotidiani": {
+                    "mobilita": false,
+                    "igiene": true,
+                    "farmaci": false,
+                    "compagnia": true,
+                    "casa": false
+                }
+            },
+            "raw_aspetti_relazionali": {
+                "personality": "Solare, testardo, ama lo sport e i cartoni animati.",
+                "communicationStyle": "Semplice e gioioso."
+            },
+            "psychological_profile": {
+                "stile_comunicativo_preferito": "Motivante e propositivo",
+                "livello_iniziativa_desiderato": "Può organizzare la giornata autonomamente",
+                "approccio_emotivo_desiderato": "Calda e familiare",
+                "ambiente_contesto": "Vivace, con famiglia sempre presente",
+                "gestione_imprevisti": "Chieda sempre a noi"
+            },
+            "raw_logistica": {
+                "ore_impegno": "Doposcuola (15-19)",
+                "supporto_notturno": false,
+                "flessibilita_festivita": false
+            },
+            "raw_preferenze_caregiver": {
+                "livello_esperienza": "Educatore / Junior",
+                "competenze_richieste": [
+                    "gioco",
+                    "didattica",
+                    "pazienza"
+                ]
+            },
+            "raw_valori_convivenza": {
+                "descrizione": "Cerchiamo qualcuno che diventi parte della famiglia e sappia gestire l'energia di Paolo collaborando con noi."
+            }
+        },
+        {
+            "id": "d-005",
+            "category": "Routine Rigida",
+            "name": "Roberto",
+            "raw_contexto_vita": {
+                "eta": 55,
+                "tipo_disabilita": "Autismo ad alto funzionamento (Asperger)",
+                "ambiente_domestico": "Estremamente ordinato, ogni oggetto ha un posto fisso."
+            },
+            "raw_bisogni_assistenziali": {
+                "livello_autonomia": "Alto ma con blocchi esecutivi",
+                "bisogni_quotidiani": {
+                    "mobilita": false,
+                    "igiene": false,
+                    "farmaci": true,
+                    "compagnia": true,
+                    "casa": true
+                }
+            },
+            "raw_aspetti_relazionali": {
+                "personality": "Metodico, sensibile ai rumori, focalizzato sui suoi interessi.",
+                "communicationStyle": "Silenzioso, solo quando necessario."
+            },
+            "psychological_profile": {
+                "stile_comunicativo_preferito": "Silenzioso, solo quando necessario",
+                "livello_iniziativa_desiderato": "Voglio decidere tutto io/noi",
+                "approccio_emotivo_desiderato": "Professionale e distaccata",
+                "ambiente_contesto": "Tranquillo e silenzioso",
+                "gestique_imprevisti": "Chieda sempre a noi"
+            },
+            "raw_logistica": {
+                "ore_impegno": "Poche ore al giorno",
+                "supporto_notturno": false,
+                "flessibilita_festivita": false
+            },
+            "raw_preferenze_caregiver": {
+                "livello_esperienza": "Esperto",
+                "competenze_richieste": [
+                    "rispetto spazi",
+                    "precisione",
+                    "gestione stress"
+                ]
+            },
+            "raw_valori_convivenza": {
+                "descrizione": "Il rispetto degli orari e delle routine è per me vitale per evitare l'ansia."
+            }
+        },
+        {
+            "id": "d-006",
+            "category": "Imprevedibile / Variabile",
+            "name": "Silvia",
+            "raw_contexto_vita": {
+                "eta": 40,
+                "tipo_disabilita": "Sclerosi Multipla recidivante-remittente",
+                "ambiente_domestico": "Appartamento funzionale, attrezzature presenti ma spesso nascoste."
+            },
+            "raw_bisogni_assistenziali": {
+                "livello_autonomia": "Oscillante",
+                "bisogni_quotidiani": {
+                    "mobilita": true,
+                    "igiene": true,
+                    "farmaci": true,
+                    "compagnia": true,
+                    "casa": true
+                }
+            },
+            "raw_aspetti_relazionali": {
+                "personality": "Combattiva, soggetta a sbalzi d'umore legati al dolore fisico.",
+                "communicationStyle": "Diretto e chiaro."
+            },
+            "psychological_profile": {
+                "stile_comunicativo_preferito": "Empatico e rassicurante",
+                "livello_iniziativa_desiderato": "Può proporre ma chiediamo conferma",
+                "approccio_emotivo_desiderato": "Empatica ma con confini chiari",
+                "ambiente_contesto": "Variabile",
+                "gestione_imprevisti": "Proponga alternative"
+            },
+            "raw_logistica": {
+                "ore_impegno": "Flessibile",
+                "supporto_notturno": true,
+                "flessibilita_festivita": true
+            },
+            "raw_preferenze_caregiver": {
+                "livello_esperienza": "Molto esperto",
+                "competenze_richieste": [
+                    "adattabilità",
+                    "infermeria base",
+                    "supporto morale"
+                ]
+            },
+            "raw_valori_convivenza": {
+                "descrizione": "Ho bisogno di una persona che capisca quando ho bisogno di aiuto totale e quando invece voglio fare da sola."
+            }
+        },
+        {
+            "id": "d-007",
+            "category": "Assistito Introverso",
+            "name": "Pietro",
+            "raw_contexto_vita": {
+                "eta": 82,
+                "tipo_disabilita": "Decadimento fisico senile",
+                "ambiente_domestico": "Appartamento storico, molta penombra, televisione sempre accesa a basso volume."
+            },
+            "raw_bisogni_assistenziali": {
+                "livello_autonomia": "Basso",
+                "bisogni_quotidiani": {
+                    "mobilita": true,
+                    "igiene": true,
+                    "farmaci": true,
+                    "compagnia": false,
+                    "casa": true
+                }
+            },
+            "raw_aspetti_relazionali": {
+                "personality": "Molto riservato, poco propenso alla conversazione, abitudinario.",
+                "communicationStyle": "Silenzioso, solo quando necessario."
+            },
+            "psychological_profile": {
+                "stile_comunicativo_preferito": "Silenzioso, solo quando necessario",
+                "livello_iniziativa_desiderato": "Voglio decidere tutto io/noi",
+                "approccio_emotivo_desiderato": "Professionale e distaccata",
+                "ambiente_contesto": "Tranquillo e silenzioso",
+                "gestione_imprevisti": "Accetti e riprovi dopo"
+            },
+            "raw_logistica": {
+                "ore_impegno": "Lungo orario",
+                "supporto_notturno": false,
+                "flessibilita_festivita": false
+            },
+            "raw_preferenze_caregiver": {
+                "livello_esperienza": "Esperto",
+                "competenze_richieste": [
+                    "pazienza",
+                    "competenze fisiche",
+                    "discrezione"
+                ]
+            },
+            "raw_valori_convivenza": {
+                "descrizione": "Non amo le chiacchiere inutili. Preferisco chi fa il suo lavoro in modo silenzioso ed efficiente."
+            }
+        },
+        {
+            "id": "d-008",
+            "category": "Necessità Notturne",
+            "name": "Claudio",
+            "raw_contexto_vita": {
+                "eta": 68,
+                "tipo_disabilita": "Parkinson avanzato",
+                "ambiente_domestico": "Casa singola, camera da letto attrezzata con monitor."
+            },
+            "raw_bisogni_assistenziali": {
+                "livello_autonomia": "Molto Basso",
+                "bisogni_quotidiani": {
+                    "mobilita": true,
+                    "igiene": true,
+                    "farmaci": true,
+                    "compagnia": true,
+                    "casa": false
+                }
+            },
+            "raw_aspetti_relazionali": {
+                "personality": "Spaventato dalla progressione della malattia, ricerca sicurezza.",
+                "communicationStyle": "Empatico e rassicurante."
+            },
+            "psychological_profile": {
+                "stile_comunicativo_preferito": "Empatico e rassicurante",
+                "livello_iniziativa_desiderato": "Può proporre ma chiediamo conferma",
+                "approccio_emotivo_desiderato": "Calda e familiare",
+                "ambiente_contesto": "Tranquillo e silenzioso",
+                "gestione_imprevisti": "Proponga alternative"
+            },
+            "raw_logistica": {
+                "ore_impegno": "Notturno garantito",
+                "supporto_notturno": true,
+                "flessibilita_festivita": true
+            },
+            "raw_preferenze_caregiver": {
+                "livello_esperienza": "Molto esperto",
+                "competenze_richieste": [
+                    "vigilanza",
+                    "gestione tremori",
+                    "primo soccorso"
+                ]
+            },
+            "raw_valori_convivenza": {
+                "descrizione": "La notte è il momento più difficile. Cerco un caregiver che sia vigile e calmo."
+            }
+        }
+    ]
+}
