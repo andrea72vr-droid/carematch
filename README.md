@@ -50,3 +50,4 @@ Se vuoi testare in locale prima di pubblicare:
 - Dashboard supervisore
 - Feedback loop e apprendimento
 
+<!-- Force Vercel rebuild -->
